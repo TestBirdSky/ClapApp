@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import com.google.android.gms.ads.MobileAds
+import com.water.soak.SteamHelper
 
 var isactive: Boolean = false
 val key = "done"
@@ -41,6 +42,7 @@ class MyApplication : Application() {
                 getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
+        SteamHelper.init(this)
     }
 
     fun getBooleanFromSharedPreferences1(

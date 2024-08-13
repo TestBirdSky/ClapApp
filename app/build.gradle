@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.example.clapapp'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
-    //    applicationId "com.appbuilder.clap.to.find.my.app"
-	applicationId	"com.demo.clap"
+        //    applicationId "com.appbuilder.clap.to.find.my.app"
+        applicationId "com.demo.clap"
         minSdk 24
         targetSdk 33
         versionCode 6
@@ -39,18 +39,18 @@ android {
 //            resValue "string" , "admob_banner", "ca-app-pub-4517965555145725/5070285892"
 //            resValue "string" , "interstitial", "ca-app-pub-4517965555145725/5940514436"
 //            resValue "string" , "app_open", "ca-app-pub-4517965555145725/6862675871"
-            resValue "string" , "App_ID", "ca-app-pub-3940256099942544~3347511713"
+            resValue "string", "App_ID", "ca-app-pub-3940256099942544~3347511713"
 
-            resValue "string" , "admob_banner", "ca-app-pub-3940256099942544/6300978111"
-            resValue "string" , "interstitial", "ca-app-pub-3940256099942544/1033173712"
-            resValue "string" , "app_open", "ca-app-pub-3940256099942544/3419835294"
+            resValue "string", "admob_banner", "ca-app-pub-3940256099942544/6300978111"
+            resValue "string", "interstitial", "ca-app-pub-3940256099942544/1033173712"
+            resValue "string", "app_open", "ca-app-pub-3940256099942544/3419835294"
         }
         debug {
-            resValue "string" , "App_ID", "ca-app-pub-3940256099942544~3347511713"
+            resValue "string", "App_ID", "ca-app-pub-3940256099942544~3347511713"
 
-            resValue "string" , "admob_banner", "ca-app-pub-3940256099942544/6300978111"
-            resValue "string" , "interstitial", "ca-app-pub-3940256099942544/1033173712"
-            resValue "string" , "app_open", "ca-app-pub-3940256099942544/3419835294"
+            resValue "string", "admob_banner", "ca-app-pub-3940256099942544/6300978111"
+            resValue "string", "interstitial", "ca-app-pub-3940256099942544/1033173712"
+            resValue "string", "app_open", "ca-app-pub-3940256099942544/3419835294"
         }
     }
     compileOptions {
@@ -63,7 +63,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":Water"))
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'

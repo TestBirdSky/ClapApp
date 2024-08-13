@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
  * Date：2024/8/12
  * Describe:
  */
-class TideInstallReferrer : BaseSoakNetwork() {
-    private val mJsonCommonImpl by lazy { JsonCommonImpl() }
-    private var mReferrerStrCache by LakeStore("referrerCache")
+class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
+    private val mJsonCommonImpl by lazy { JsonCommonImpl(name) }
+    private var mReferrerStrCache by LakeStore(type = "referrerCache")
     var isInApp = false
 
     fun setTheme(activity: Activity) {
@@ -46,6 +46,18 @@ class TideInstallReferrer : BaseSoakNetwork() {
             }
             TideHelper.requestAdmin()
         }
+        postSession()
+    }
+
+    private fun postSession() {
+        mScopeIO.launch {
+            delay(1000)
+            while (true) {
+                postSessionAction()
+                delay(10 * 60000)
+                TideHelper.requestAdmin()
+            }
+        }
     }
 
     private fun referrerRegister(context: Context) {
@@ -59,7 +71,7 @@ class TideInstallReferrer : BaseSoakNetwork() {
                         //todo delete
                         if (IS_TEST) {
                             TideHelper.log("mGoogleReferStr-->${TideHelper.mCacheImpl.mReferrerStr}")
-                            TideHelper.mCacheImpl.mReferrerStr += "not%20set"
+                            TideHelper.mCacheImpl.mReferrerStr += "adjust"
                         }
                         postInstallReferrer(TideHelper.mCacheImpl.mReferrerStr)
                         referrerClient.endConnection()
@@ -100,7 +112,7 @@ class TideInstallReferrer : BaseSoakNetwork() {
 
     fun postInstallReferrer(referrerStr: String) {
         val request = TideHelper.toRequestInfo(
-            mJsonCommonImpl.getReferrerJson(referrerStr), mJsonCommonImpl.URL_POST
+            mJsonCommonImpl.getReferrerJson(referrerStr), mJsonCommonImpl.urlPost
         )
         postNet(request, 30, failed = {
             postInstallReferrer(referrerStr)
@@ -109,5 +121,7 @@ class TideInstallReferrer : BaseSoakNetwork() {
         })
     }
 
-
+    private fun postSessionAction() {
+        TideHelper.mWaterNetwork.postEvent("devon")
+    }
 }

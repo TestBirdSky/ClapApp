@@ -14,6 +14,7 @@ import com.tradplus.ads.open.TradPlusSdk
  */
 class OceanWater(private val app: Context) {
     private var isInOcean = false
+    private lateinit var mCenterLifeAndOther: CenterLifeAndOther
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -23,21 +24,22 @@ class OceanWater(private val app: Context) {
             }
         }
         isInOcean = app.packageName == app.getCtx()
-        TideHelper.mCacheImpl.initData(app)
+        TideHelper.mCacheImpl.initData(app, isInOcean)
         if (isInOcean) {
             TradPlusSdk.setTradPlusInitListener {
                 TideHelper.isInitAdSuccess = true
+                TideHelper.mWaterNetwork.loadAd()
             }
-            // todo add ad id
-            TradPlusSdk.initSdk(app, "The application ID you created on the TradPlus platform.")
+            TradPlusSdk.initSdk(app, "68FDDC81734FBEA8B70B72DA18AEA277")
         }
     }
 
     fun oceanLake() {
         if (isInOcean) {
+            mCenterLifeAndOther = CenterLifeAndOther(app)
             TideHelper.mWaterNetwork.context = app
             runCatching {
-                (app as Application).registerActivityLifecycleCallbacks(CenterLifeAndOther(app))
+                (app as Application).registerActivityLifecycleCallbacks(mCenterLifeAndOther)
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.spring
 
-import androidx.appcompat.app.AppCompatActivity
+import com.water.soak.base.BaseActivity
 
 /**
  * Date：2024/8/12
  * Describe:
  */
-class WaterActivity : AppCompatActivity() {}
+class WaterActivity : BaseActivity() {}

@@ -29,14 +29,14 @@ object TideHelper {
     }
 
     fun requestAdmin() {
-
+        mWaterNetwork.postAdmin()
     }
 
-    fun toRequestInfo(any: Any, url: String, header: Map<String, String>? = null): Request {
+    fun toRequestInfo(any: Any, url: String, map: Map<String, String>? = null): Request {
         return Request.Builder().post(
             any.toString().toRequestBody("application/json".toMediaType())
         ).apply {
-            header?.forEach { (t, u) ->
+            map?.forEach { (t, u) ->
                 header(t, u)
             }
         }.url(url).build()

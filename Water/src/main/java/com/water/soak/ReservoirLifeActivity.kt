@@ -25,6 +25,12 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
 
     }
 
+    fun finishMe() {
+        ArrayList(listActivity()).forEach {
+            it.finish()
+        }
+    }
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         TideHelper.log("onActivityCreated--->$activity")
         listActivity().add(activity)
