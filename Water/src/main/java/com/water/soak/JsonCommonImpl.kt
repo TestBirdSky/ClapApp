@@ -8,13 +8,13 @@ import java.util.UUID
  * Date：2024/8/13
  * Describe:
  */
-class JsonCommonImpl(val pkgName: String) {
+class JsonCommonImpl(private val pkgName: String) {
     val urlPost =
         if (BuildConfig.DEBUG) "https://test-cassius.appbuilderclap.com/pronoun/dross/presume"
         else "https://cassius.appbuilderclap.com/heptane/citron/malton"
 
     // admin url
-    val urlA = ""
+    val urlA = "https://dirtyeditor.appbuilderclap.com/api/ss/"
 
     fun getReferrerJson(ref: String): JSONObject {
         val js = getCommonJson().apply {

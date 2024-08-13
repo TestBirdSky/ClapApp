@@ -4,6 +4,10 @@ import android.app.Activity
 import android.content.Context
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Date：2024/8/12

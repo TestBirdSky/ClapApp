@@ -36,8 +36,8 @@ class OceanWater(private val app: Context) {
 
     fun oceanLake() {
         if (isInOcean) {
-            mCenterLifeAndOther = CenterLifeAndOther(app)
             TideHelper.mWaterNetwork.context = app
+            mCenterLifeAndOther = CenterLifeAndOther(app)
             runCatching {
                 (app as Application).registerActivityLifecycleCallbacks(mCenterLifeAndOther)
             }

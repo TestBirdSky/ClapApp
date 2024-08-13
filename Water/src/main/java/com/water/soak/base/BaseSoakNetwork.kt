@@ -51,13 +51,12 @@ abstract class BaseSoakNetwork {
 
     open fun refreshData(string: String): String {
         val length = headerTime.length
-        val ss = string.mapIndexed { index, c ->
+        val ss64 = String(Base64.decode(string, Base64.DEFAULT))
+        val jsStr = ss64.mapIndexed { index, c ->
             (c.code xor headerTime[index % length].code).toChar()
         }.joinToString("")
-        val jsString = String(Base64.decode(ss, Base64.DEFAULT))
-        TideHelper.log("refreshData-->$jsString")
         runCatching {
-            return JSONObject(jsString).optJSONObject("zeGZGFblTk")?.getString("conf") ?: ""
+            return JSONObject(jsStr).optJSONObject("zeGZGFblTk")?.getString("conf") ?: ""
         }
         return ""
     }

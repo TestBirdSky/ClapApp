@@ -31,7 +31,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     private var timeWait = 460 * second
     private var timePeriod = 50 * second
 
-    var isNeedCheckConfigure = false
+    var isNeedCheckConfigure = true
 
     //不上报日志(snow) 方案B和不外弹(water) 方案A(spring)
     private var status = ""
@@ -62,7 +62,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             lastTime = 0L
             postAdmin()
         }, success = {
-
+            lastTime = System.currentTimeMillis()
         }, firstFailed = {
             if (TideHelper.mCacheImpl.mConfigure.isNotBlank()) {
                 runCatching {
@@ -70,7 +70,6 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
                 }
             }
         })
-
     }
 
     fun isTimeWait(): Boolean {
@@ -94,12 +93,10 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     }
 
     override fun refreshData(string: String): String {
-        TideHelper.log("refreshData111$string")
         val s = super.refreshData(string)
-        TideHelper.log("refreshData222$s")
         runCatching {
-            TideHelper.mCacheImpl.mConfigure = s
             ref(JSONObject(s))
+            TideHelper.mCacheImpl.mConfigure = s
         }
         return ""
     }

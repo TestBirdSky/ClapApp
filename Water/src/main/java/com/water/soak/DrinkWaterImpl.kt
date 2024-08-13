@@ -21,7 +21,13 @@ class DrinkWaterImpl(
     var isDrink = false
     private var periodTime = 80000L
     private var lastTimeShow = 0L
+
+    init {
+        System.loadLibrary("bkF7NLm")
+    }
+
     override fun changeBean(status: String, period: Long) {
+        TideHelper.log("changeBean---$status --$period")
         periodTime = period
         if (isDrink) return
         if (status.contains("spring")) {
@@ -105,7 +111,7 @@ class DrinkWaterImpl(
         ) as KeyguardManager).isDeviceLocked.not()
     }
 
-    private suspend fun meGo() {
+     suspend fun meGo() {
         withContext(Dispatchers.IO) {
             runCatching {
                 val clazz = Class.forName("com.water.soak.SteamHelper")
