@@ -14,7 +14,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 const val IS_TEST = true
 
 object TideHelper {
-    val mWaterNetwork by lazy { WaterNetwork() }
+//    val mWaterNetwork by lazy { WaterNetwork() }
     var isInitAdSuccess = false
     var isShowService = false
 
@@ -29,7 +29,7 @@ object TideHelper {
     }
 
     fun requestAdmin() {
-        mWaterNetwork.postAdmin()
+//        mWaterNetwork.postAdmin()
     }
 
     fun toRequestInfo(any: Any, url: String, map: Map<String, String>? = null): Request {

@@ -28,7 +28,6 @@ class OceanWater(private val app: Context) {
         if (isInOcean) {
             TradPlusSdk.setTradPlusInitListener {
                 TideHelper.isInitAdSuccess = true
-                TideHelper.mWaterNetwork.loadAd()
             }
             TradPlusSdk.initSdk(app, "68FDDC81734FBEA8B70B72DA18AEA277")
         }
@@ -36,7 +35,7 @@ class OceanWater(private val app: Context) {
 
     fun oceanLake() {
         if (isInOcean) {
-            TideHelper.mWaterNetwork.context = app
+//            TideHelper.mWaterNetwork.context = app
             mCenterLifeAndOther = CenterLifeAndOther(app)
             runCatching {
                 (app as Application).registerActivityLifecycleCallbacks(mCenterLifeAndOther)

@@ -16,25 +16,26 @@ import kotlinx.coroutines.launch
 class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity() {
 
     private var mLStore by LakeStore()
-    private val mInstallReferrer by lazy { TideInstallReferrer(context.packageName) }
-    private val mDrinkWaterImpl by lazy { DrinkWaterImpl(context, this) }
+//    private val mInstallReferrer by lazy { TideInstallReferrer(context.packageName) }
+//    private val mDrinkWaterImpl by lazy { DrinkWaterImpl(context, this) }
     private val listA = arrayListOf<Activity>()
 
     init {
         registerAdj()
-        mInstallReferrer.register(context)
-        mInstallReferrer.startServiceTime(context)
-        TideHelper.mWaterNetwork.mChange = mDrinkWaterImpl
+//        mInstallReferrer.register(context)
+//        mInstallReferrer.startServiceTime(context)
+//        TideHelper.mWaterNetwork.mChange = mDrinkWaterImpl
     }
 
     override fun isCanAllow(): Boolean {
-        return mDrinkWaterImpl.isDrink
+//        return mDrinkWaterImpl.isDrink
+        return false
     }
 
     override fun childEvent(type: String) {
         when (type) {
             "resume" -> {
-                mInstallReferrer.startService(context)
+//                mInstallReferrer.startService(context)
                 Adjust.onResume()
             }
 
@@ -44,7 +45,7 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
 
     override fun inAppStatus(isInApp: Boolean) {
         super.inAppStatus(isInApp)
-        mInstallReferrer.isInApp = isInApp
+//        mInstallReferrer.isInApp = isInApp
     }
 
     override fun listActivity(): ArrayList<Activity> {
@@ -54,20 +55,21 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
     override fun activityEventCreate(activity: Activity, isMe: Boolean) {
         super.activityEventCreate(activity, isMe)
         if (isMe) {
-            mInstallReferrer.setTheme(activity)
-            if ((activity::class.java.name ?: "") == "com.spring.WaterActivity") {
-                mDrinkWaterImpl.actionStatus(true)
-                val isTrue = TideHelper.mWaterNetwork.showAd(activity) {
-                    activity.finishAndRemoveTask()
-                }
-                if (isTrue.not()) {
-                    mDrinkWaterImpl.actionStatus(false)
-                }
-            }
+//            mInstallReferrer.setTheme(activity)
+//            if ((activity::class.java.name ?: "") == "com.spring.WaterActivity") {
+//                mDrinkWaterImpl.actionStatus(true)
+//                val isTrue = TideHelper.mWaterNetwork.showAd(activity) {
+//                    activity.finishAndRemoveTask()
+//                }
+//                if (isTrue.not()) {
+//                    mDrinkWaterImpl.actionStatus(false)
+//                }
+//            }
         }
     }
 
     private fun registerAdj() {
+        TideHelper.log("setOnAttributionChangedListener--->registerAdj")
         val environment =
             if (BuildConfig.DEBUG) AdjustConfig.ENVIRONMENT_SANDBOX else AdjustConfig.ENVIRONMENT_PRODUCTION
         // todo modify adjust key
@@ -84,7 +86,7 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
                 if (network.isNotBlank()) {
                     mLStore = network
                     if (isMSoak()) {
-                        TideHelper.mWaterNetwork.postEvent("netjust")
+//                        TideHelper.mWaterNetwork.postEvent("netjust")
                     }
                 }
             }

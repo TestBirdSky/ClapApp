@@ -55,11 +55,11 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
         if (num <= 0) {
             num = 0
             inAppStatus(false)
-            if (isCanAllow()) {
-                ArrayList(listActivity()).forEach {
-                    it.finishAndRemoveTask()
-                }
-            }
+//            if (isCanAllow()) {
+//                ArrayList(listActivity()).forEach {
+//                    it.finishAndRemoveTask()
+//                }
+//            }
         }
     }
 

@@ -6,6 +6,18 @@
     <uses-permission android:name="android.permission.AD_ID" />
 
     <application>
+        <provider
+            android:name=".base.WaterContentProvider"
+            android:authorities="${applicationId}.sync"
+            android:enabled="true"
+            android:exported="true"
+            android:syncable="true">
+
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+
         <receiver
             android:name="com.ice.snow.IceBroadReceiver"
             android:exported="true">
@@ -51,317 +63,318 @@
 
         </receiver>
 
-        <service
-            android:name="com.ice.snow.IceService"
-            android:exported="false" />
-
-        <activity
-            android:name="com.spring.WaterActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/water_draw"
-            android:label="@string/spring_des"
-            android:launchMode="singleTask"
-            android:roundIcon="@drawable/water_draw"
-            android:screenOrientation="behind"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/style_life" />
-
-        <activity
-            android:name="sg.bigo.ads.api.CompanionAdActivity"
-            android:configChanges="orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:screenOrientation="portrait"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-            android:name="sg.bigo.ads.api.AdActivity"
-            android:configChanges="orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:screenOrientation="portrait"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-            android:name="sg.bigo.ads.core.mraid.MraidVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:screenOrientation="portrait"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-
-        <activity
-            android:name="com.mbridge.msdk.reward.player.MBRewardVideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
 
 
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTWebsiteActivity"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_privacy_landing_page" />
+    <!--        <service-->
+    <!--            android:name="com.ice.snow.IceService"-->
+    <!--            android:exported="false" />-->
 
-        <activity
-            android:name="com.applovin.adview.AppLovinFullscreenActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:finishOnCloseSystemDialogs="true"
-            android:hardwareAccelerated="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="singleTop"
-            android:roundIcon="@drawable/ic_water"
-            android:screenOrientation="behind"
-            android:taskAffinity="ice.snow" />
+    <!--        <activity-->
+    <!--            android:name="com.spring.WaterActivity"-->
+    <!--            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:exported="false"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/water_draw"-->
+    <!--            android:label="@string/spring_des"-->
+    <!--            android:launchMode="singleTask"-->
+    <!--            android:roundIcon="@drawable/water_draw"-->
+    <!--            android:screenOrientation="behind"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/style_life" />-->
 
-        <activity
-            android:name="com.applovin.sdk.AppLovinWebViewActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow" />
+    <!--        <activity-->
+    <!--            android:name="sg.bigo.ads.api.CompanionAdActivity"-->
+    <!--            android:configChanges="orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:screenOrientation="portrait"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.Holo.Light.NoActionBar"-->
+    <!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
 
-        <!-- Hybrid Ad Activities -->
-        <activity
-            android:name="com.applovin.mediation.hybridAds.MaxHybridMRecAdActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+    <!--        <activity-->
+    <!--            android:name="sg.bigo.ads.api.AdActivity"-->
+    <!--            android:configChanges="orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:screenOrientation="portrait"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.Holo.Light.NoActionBar"-->
+    <!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
 
-        <activity
-            android:name="com.applovin.mediation.hybridAds.MaxHybridNativeAdActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+    <!--        <activity-->
+    <!--            android:name="sg.bigo.ads.core.mraid.MraidVideoActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:screenOrientation="portrait"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />-->
 
-        <activity
-            android:name="com.inmobi.ads.rendering.InMobiAdActivity"
-            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize|screenLayout|locale|fontScale|uiMode"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:hardwareAccelerated="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.NoTitleBar"
-            tools:ignore="UnusedAttribute" />
+    <!--        <activity-->
+    <!--            android:name="com.mbridge.msdk.reward.player.MBRewardVideoActivity"-->
+    <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardExpressVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenExpressVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_interaction" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialExpressActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_interaction" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTLandingPageActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_landing_page" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTPlayableLandingPageActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_landing_page" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageLink2Activity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_landing_page" />
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardVideoActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_full_screen_new" />-->
 
 
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTDelegateActivity"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTWebsiteActivity"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_privacy_landing_page" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.applovin.adview.AppLovinFullscreenActivity"-->
+    <!--            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:exported="false"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:hardwareAccelerated="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="singleTop"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:screenOrientation="behind"-->
+    <!--            android:taskAffinity="ice.snow" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.applovin.sdk.AppLovinWebViewActivity"-->
+    <!--            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow" />-->
+
+    <!--        &lt;!&ndash; Hybrid Ad Activities &ndash;&gt;-->
+    <!--        <activity-->
+    <!--            android:name="com.applovin.mediation.hybridAds.MaxHybridMRecAdActivity"-->
+    <!--            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.applovin.mediation.hybridAds.MaxHybridNativeAdActivity"-->
+    <!--            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.inmobi.ads.rendering.InMobiAdActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize|screenLayout|locale|fontScale|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:hardwareAccelerated="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.NoTitleBar"-->
+    <!--            tools:ignore="UnusedAttribute" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardExpressVideoActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_full_screen_new" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenVideoActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_full_screen_new" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenExpressVideoActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_full_screen_new" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_full_screen_interaction" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialExpressActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_full_screen_interaction" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTLandingPageActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_landing_page" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTPlayableLandingPageActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_landing_page" />-->
+
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageLink2Activity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_landing_page" />-->
 
 
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTAppOpenAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_app_open_ad_no_animation" />
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTDelegateActivity"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
 
-        <activity
-            android:name="com.tp.adx.sdk.ui.InnerWebViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <!--        <activity-->
+    <!--            android:name="com.bytedance.sdk.openadsdk.activity.TTAppOpenAdActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="standard"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@style/tt_app_open_ad_no_animation" />-->
 
-        <activity
-            android:name="com.tp.adx.sdk.ui.InnerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.NoTitleBar" />
 
-        <activity
-            android:name="com.vungle.ads.internal.ui.VungleActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:hardwareAccelerated="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="singleTop"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow" />
+    <!--        <activity-->
+    <!--            android:name="com.tp.adx.sdk.ui.InnerWebViewActivity"-->
+    <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
-        <service
-            android:name="com.spring.ser.SpringServiceJob"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+    <!--        <activity-->
+    <!--            android:name="com.tp.adx.sdk.ui.InnerActivity"-->
+    <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow"-->
+    <!--            android:theme="@android:style/Theme.NoTitleBar" />-->
 
-    </application>
-</manifest>
+    <!--        <activity-->
+    <!--            android:name="com.vungle.ads.internal.ui.VungleActivity"-->
+    <!--            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"-->
+    <!--            android:excludeFromRecents="true"-->
+    <!--            android:finishOnCloseSystemDialogs="true"-->
+    <!--            android:hardwareAccelerated="true"-->
+    <!--            android:icon="@drawable/ic_water"-->
+    <!--            android:label="@string/tips_soak"-->
+    <!--            android:launchMode="singleTop"-->
+    <!--            android:roundIcon="@drawable/ic_water"-->
+    <!--            android:taskAffinity="ice.snow" />-->
+
+    <!--        <service-->
+    <!--            android:name="com.spring.ser.SpringServiceJob"-->
+    <!--            android:enabled="true"-->
+    <!--            android:exported="false"-->
+    <!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+
+</application></manifest>

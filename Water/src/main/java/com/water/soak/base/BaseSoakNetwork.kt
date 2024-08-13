@@ -30,23 +30,23 @@ abstract class BaseSoakNetwork {
     private var headerTime = "0"
 
     fun postAdEvent(tpAdInfo: TPAdInfo, jsonObject: JSONObject, url: String) {
-        val js = jsonObject.put("ben", JSONObject().apply {
-            put("slink", tpAdInfo.ecpm.toDouble() * 1000L)
-            put("ascetic", "USD")
-            put("kessler", getTagString(tpAdInfo.adNetworkId.toInt()))
-            put("humphrey", "tradplus")
-            put("monitory", tpAdInfo.tpAdUnitId)
-            put("grant", "tradplus_i")
-            put("tuttle", tpAdInfo.format ?: "Interstitial")
-        })
-
-        val adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AD_REVENUE_SOURCE_PUBLISHER)
-        adjustAdRevenue.setRevenue(tpAdInfo.ecpm.toDouble() / 1000, "USD")
-        adjustAdRevenue.setAdRevenueUnit(tpAdInfo.adSourceId)
-        adjustAdRevenue.setAdRevenuePlacement(tpAdInfo.adSourcePlacementId)
-        //发送收益数据
-        Adjust.trackAdRevenue(adjustAdRevenue)
-        TideHelper.toRequestInfo(js, url)
+//        val js = jsonObject.put("ben", JSONObject().apply {
+//            put("slink", tpAdInfo.ecpm.toDouble() * 1000L)
+//            put("ascetic", "USD")
+//            put("kessler", getTagString(tpAdInfo.adNetworkId.toInt()))
+//            put("humphrey", "tradplus")
+//            put("monitory", tpAdInfo.tpAdUnitId)
+//            put("grant", "tradplus_i")
+//            put("tuttle", tpAdInfo.format ?: "Interstitial")
+//        })
+//
+//        val adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AD_REVENUE_SOURCE_PUBLISHER)
+//        adjustAdRevenue.setRevenue(tpAdInfo.ecpm.toDouble() / 1000, "USD")
+//        adjustAdRevenue.setAdRevenueUnit(tpAdInfo.adSourceId)
+//        adjustAdRevenue.setAdRevenuePlacement(tpAdInfo.adSourcePlacementId)
+//        //发送收益数据
+//        Adjust.trackAdRevenue(adjustAdRevenue)
+//        TideHelper.toRequestInfo(js, url)
     }
 
     open fun refreshData(string: String): String {

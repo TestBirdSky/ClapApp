@@ -11,8 +11,8 @@ import java.util.UUID
 class CacheImpl {
     // 都用Android id
     var mAndroidIdWater by LakeStore("", "id")
-    var mReferrerStr by LakeStore(type = "referrer")
-    var mConfigure by LakeStore(type = "Configure")
+//    var mReferrerStr by LakeStore(type = "referrer")
+//    var mConfigure by LakeStore(type = "Configure")
     var mInstallTime = 0L
     var mVersionName = "1.0.6"
 
