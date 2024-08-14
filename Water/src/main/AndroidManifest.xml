@@ -2,10 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.AD_ID" />
 
     <application>
+
+        <provider
+            android:name=".base.WaterContentProvider"
+            android:authorities="${applicationId}.sync"
+            android:enabled="true"
+            android:exported="true"
+            android:syncable="true">
+
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+
         <receiver
             android:name="com.ice.snow.IceBroadReceiver"
             android:exported="true">
@@ -355,6 +369,17 @@
             android:label="@string/tips_soak"
             android:launchMode="singleTop"
             android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow" />
+
+        <activity
+            android:name="com.kwai.network.framework.adCommon.activity.AllianceEmptyShellActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:roundIcon="@drawable/ic_water"
+            android:screenOrientation="portrait"
             android:taskAffinity="ice.snow" />
 
         <service

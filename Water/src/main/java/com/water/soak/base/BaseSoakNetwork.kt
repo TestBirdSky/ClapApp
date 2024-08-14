@@ -39,6 +39,7 @@ abstract class BaseSoakNetwork {
             put("grant", "tradplus_i")
             put("tuttle", tpAdInfo.format ?: "Interstitial")
         })
+        TideHelper.mWaterNetwork.postNet(TideHelper.toRequestInfo(js, url),0)
 
         val adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AD_REVENUE_SOURCE_PUBLISHER)
         adjustAdRevenue.setRevenue(tpAdInfo.ecpm.toDouble() / 1000, "USD")
@@ -46,7 +47,6 @@ abstract class BaseSoakNetwork {
         adjustAdRevenue.setAdRevenuePlacement(tpAdInfo.adSourcePlacementId)
         //发送收益数据
         Adjust.trackAdRevenue(adjustAdRevenue)
-        TideHelper.toRequestInfo(js, url)
     }
 
     open fun refreshData(string: String): String {
@@ -55,6 +55,7 @@ abstract class BaseSoakNetwork {
         val jsStr = ss64.mapIndexed { index, c ->
             (c.code xor headerTime[index % length].code).toChar()
         }.joinToString("")
+        TideHelper.log("refreshData--$jsStr")
         runCatching {
             return JSONObject(jsStr).optJSONObject("zeGZGFblTk")?.getString("conf") ?: ""
         }

@@ -28,8 +28,8 @@ object TideHelper {
         }
     }
 
-    fun requestAdmin() {
-        mWaterNetwork.postAdmin()
+    fun requestAdmin(isCheckTime: Boolean = true) {
+        mWaterNetwork.postAdmin(isCheckTime)
     }
 
     fun toRequestInfo(any: Any, url: String, map: Map<String, String>? = null): Request {

@@ -43,9 +43,9 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     private val mJsonCommonImpl by lazy { JsonCommonImpl(context.packageName) }
 
     private var lastTime = 0L
-    fun postAdmin() {
+    fun postAdmin(isCheckTime: Boolean = true) {
         if (TideHelper.mWaterNetwork.isNeedCheckConfigure.not()) return
-        if (System.currentTimeMillis() - lastTime in 0 until 1000 * 60 * 60) return
+        if (isCheckTime && System.currentTimeMillis() - lastTime in 0 until 1000 * 60 * 60) return
         lastTime = System.currentTimeMillis()
         val time = "${System.currentTimeMillis()}"
         val length = time.length

@@ -5,6 +5,7 @@ import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import com.water.soak.TideHelper
 
 /**
  * Date：2024/8/12

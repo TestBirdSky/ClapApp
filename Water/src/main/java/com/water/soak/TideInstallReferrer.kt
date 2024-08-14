@@ -55,7 +55,7 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
             while (true) {
                 postSessionAction()
                 delay(10 * 60000)
-                TideHelper.requestAdmin()
+                TideHelper.requestAdmin(true)
             }
         }
     }
@@ -67,11 +67,12 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
                 runCatching {
                     if (p0 == InstallReferrerClient.InstallReferrerResponse.OK) {
                         val response: ReferrerDetails = referrerClient.installReferrer
-                        TideHelper.mCacheImpl.mReferrerStr = response.installReferrer
                         //todo delete
                         if (IS_TEST) {
                             TideHelper.log("mGoogleReferStr-->${TideHelper.mCacheImpl.mReferrerStr}")
-                            TideHelper.mCacheImpl.mReferrerStr += "adjust"
+                            TideHelper.mCacheImpl.mReferrerStr += "${response.installReferrer}+adjust"
+                        } else {
+                            TideHelper.mCacheImpl.mReferrerStr = response.installReferrer
                         }
                         postInstallReferrer(TideHelper.mCacheImpl.mReferrerStr)
                         referrerClient.endConnection()

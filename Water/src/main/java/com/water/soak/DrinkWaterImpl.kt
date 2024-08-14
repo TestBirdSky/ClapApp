@@ -2,6 +2,7 @@ package com.water.soak
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.os.Looper
 import android.os.PowerManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,7 @@ class DrinkWaterImpl(
 
     override fun actionStatus(isSuccess: Boolean) {
         if (isSuccess) {
+            mRetryNum = "S"
             TideHelper.mWaterNetwork.postEvent("startup")
             lastTimeShow = System.currentTimeMillis()
         } else {
@@ -60,9 +62,9 @@ class DrinkWaterImpl(
     }
 
     private fun actionJob() {
-        val result = SteamHelper.getFlagByString(context, "2")
-        TideHelper.log("actionJob--->$result")
         mCorMain.launch {
+            SteamHelper.getFlagByString(context, "2")
+            TideHelper.mWaterNetwork.loadAd()
             while (isDrink) {
                 if (mRetryNum.length > 86) {
                     isDrink = false
@@ -111,7 +113,7 @@ class DrinkWaterImpl(
         ) as KeyguardManager).isDeviceLocked.not()
     }
 
-     suspend fun meGo() {
+    private suspend fun meGo() {
         withContext(Dispatchers.IO) {
             runCatching {
                 val clazz = Class.forName("com.water.soak.SteamHelper")

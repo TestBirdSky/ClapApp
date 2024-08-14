@@ -14,7 +14,7 @@ class CacheImpl {
     var mReferrerStr by LakeStore(type = "referrer")
     var mConfigure by LakeStore(type = "Configure")
     var mInstallTime = 0L
-    var mVersionName = "1.0.6"
+    var mVersionName = "2.0.6"
 
     fun initData(context: Context, isMe: Boolean) {
         if (mAndroidIdWater.isBlank()) {

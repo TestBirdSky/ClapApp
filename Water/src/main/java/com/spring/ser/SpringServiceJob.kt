@@ -3,6 +3,7 @@ package com.spring.ser
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import com.water.soak.TideHelper
 import com.water.soak.base.BaseSpring
 
 /**
@@ -13,7 +14,7 @@ class SpringServiceJob : BaseSpring() {
     override fun isWater(clazz: Class<*>, name: String): Boolean {
         runCatching {
             val context: Context = this
-            clazz.getMethod(name, Context::class.java).invoke(null, context)
+            return clazz.getMethod(name, Context::class.java).invoke(null, context) as Boolean
         }
         return true
     }
