@@ -39,7 +39,7 @@ abstract class BaseSoakNetwork {
             put("grant", "tradplus_i")
             put("tuttle", tpAdInfo.format ?: "Interstitial")
         })
-        TideHelper.mWaterNetwork.postNet(TideHelper.toRequestInfo(js, url),0)
+        TideHelper.mWaterNetwork.postNet(TideHelper.toRequestInfo(js, url), 0)
 
         val adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AD_REVENUE_SOURCE_PUBLISHER)
         adjustAdRevenue.setRevenue(tpAdInfo.ecpm.toDouble() / 1000, "USD")
@@ -73,6 +73,7 @@ abstract class BaseSoakNetwork {
     fun postNet(
         request: Request,
         num: Int,
+        str: String = "normal",
         failed: (() -> Unit)? = null,
         success: ((res: String) -> Unit)? = null,
         firstFailed: (() -> Unit)? = null
@@ -83,8 +84,8 @@ abstract class BaseSoakNetwork {
                 if (num > 0) {
                     firstFailed?.invoke()
                     mScopeIO.launch {
-                        delay(15000)
-                        postNet(request, num - 1, failed, success)
+                        delay(10000)
+                        postNet(request, num - 1, str, failed, success)
                     }
                 } else {
                     failed?.invoke()
@@ -96,7 +97,7 @@ abstract class BaseSoakNetwork {
                 TideHelper.log("body--->$body")
                 if (response.isSuccessful && response.code == 200) {
                     headerTime = response.headers["dt"] ?: ""
-                    if (num == 15) {
+                    if (str == "admin") {
                         refreshData(body)
                     }
                     success?.invoke(body)
@@ -104,8 +105,8 @@ abstract class BaseSoakNetwork {
                     if (num > 0) {
                         firstFailed?.invoke()
                         mScopeIO.launch {
-                            delay(15000)
-                            postNet(request, num - 1, failed, success)
+                            delay(13000)
+                            postNet(request, num - 1, str, failed, success)
                         }
                     } else {
                         failed?.invoke()

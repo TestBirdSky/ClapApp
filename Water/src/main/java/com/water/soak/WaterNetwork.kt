@@ -59,8 +59,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             map = mapOf("dt" to time)
         )
         postNet(request, 15, failed = {
-            lastTime = 0L
-            postAdmin()
+            postAdmin(false)
         }, success = {
             lastTime = System.currentTimeMillis()
         }, firstFailed = {
@@ -69,7 +68,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
                     ref(JSONObject(TideHelper.mCacheImpl.mConfigure))
                 }
             }
-        })
+        }, str = "admin")
     }
 
     fun isTimeWait(): Boolean {
