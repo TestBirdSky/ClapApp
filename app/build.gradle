@@ -13,7 +13,7 @@ android {
         //    applicationId "com.appbuilder.clap.to.find.my.app"
         applicationId "com.demo.clap"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 7
         versionName "2.0.6"
 
