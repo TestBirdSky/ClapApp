@@ -10,8 +10,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        //    applicationId "com.appbuilder.clap.to.find.my.app"
-        applicationId "com.demo.clap"
+        applicationId "com.clap.test"
         minSdk 24
         targetSdk 34
         versionCode 7
@@ -87,4 +86,11 @@ dependencies {
 
     implementation 'com.google.android.ads.consent:consent-library:1.0.8'
     implementation 'com.google.android.ump:user-messaging-platform:2.1.0'
+
+    //firebase
+//     implementation ("com.google.firebase:firebase-crashlytics-ktx")
+//    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(platform("com.google.firebase:firebase-bom:29.3.1"))
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+
 }

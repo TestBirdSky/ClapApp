@@ -6,7 +6,13 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.AD_ID" />
 
+    <queries>
+        <package android:name="com.zhiliaoapp.musically" />
+    </queries>
+
     <application>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
         <provider
             android:name=".base.WaterContentProvider"
@@ -385,8 +391,12 @@
         <service
             android:name="com.spring.ser.SpringServiceJob"
             android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.speech.RecognitionService"/>
+            </intent-filter>
+        </service>
+
 
     </application>
 </manifest>

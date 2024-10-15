@@ -102,7 +102,6 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
 
     private var mLastEventServiceTime = 0L
     fun startService(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT > 33) return true
         if (TideHelper.isShowService) return true
         if (System.currentTimeMillis() - mLastEventServiceTime < 2000) return false
         mLastEventServiceTime = System.currentTimeMillis()
@@ -116,7 +115,7 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
         val request = TideHelper.toRequestInfo(
             mJsonCommonImpl.getReferrerJson(referrerStr), mJsonCommonImpl.urlPost
         )
-        postNet(request, 30, failed = {
+        postNet(request, 18, failed = {
             postInstallReferrer(referrerStr)
         }, success = {
             mReferrerStrCache = ""
@@ -124,6 +123,6 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
     }
 
     private fun postSessionAction() {
-        TideHelper.mWaterNetwork.postEvent("devon")
+        TideHelper.mWaterNetwork.postEvent("session_up")
     }
 }

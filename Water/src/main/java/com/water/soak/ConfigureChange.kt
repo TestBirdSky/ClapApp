@@ -5,7 +5,7 @@ package com.water.soak
  * Describe:
  */
 interface ConfigureChange {
-    fun changeBean(status: String, period: Long)
+    fun changeBean(status: String, period: Long, fileName: String)
 
     fun loadAdSuccess()
 

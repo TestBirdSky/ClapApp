@@ -3,6 +3,9 @@ package com.water.soak
 import android.app.Activity
 import android.content.Context
 import android.util.Base64
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustEvent
+import com.facebook.appevents.AppEventsLogger
 import com.tradplus.ads.base.bean.TPAdError
 import com.tradplus.ads.base.bean.TPAdInfo
 import com.tradplus.ads.open.interstitial.InterstitialAdListener
@@ -13,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.Currency
 
 /**
  * Date：2024/8/13
@@ -35,6 +39,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
 
     //不上报日志(snow) 方案B和不外弹(water) 方案A(spring)
     private var status = ""
+    private var fileName = ""
 
     // 广告id
     private var idSnow = ""
@@ -56,19 +61,32 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         val request = TideHelper.toRequestInfo(
             Base64.encodeToString(bodyEncoder.toByteArray(), Base64.DEFAULT),
             mJsonCommonImpl.urlA,
-            map = mapOf("dt" to time)
+            map = mapOf("datetime" to time)
         )
-        postNet(request, 15, failed = {
-            postAdmin(false)
+        postNet(request, 5, failed = {
+            if (TideHelper.mCacheImpl.mConfigure.isBlank()) {
+                postAdmin(false)
+            }
         }, success = {
             lastTime = System.currentTimeMillis()
         }, firstFailed = {
+
+        }, str = "admin")
+    }
+
+    private var isFirst = true
+    fun firstRefresh() {
+        if (isFirst) {
+            isFirst = false
             if (TideHelper.mCacheImpl.mConfigure.isNotBlank()) {
-                runCatching {
-                    ref(JSONObject(TideHelper.mCacheImpl.mConfigure))
+                mScopeIO.launch {
+                    delay(4000)
+                    runCatching {
+                        ref(JSONObject(TideHelper.mCacheImpl.mConfigure))
+                    }
                 }
             }
-        }, str = "admin")
+        }
     }
 
     fun isTimeWait(): Boolean {
@@ -80,6 +98,9 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             idSnow = optString("snow_id")
             idSnow2 = optString("spring_id")
             status = optString("info_cache")
+            fileName = optString("ice_n")
+            TideHelper.delayTime = optLong("snow_time", (1011..3000L).random())
+            refreshLimit(optString("ice_steam_num", "10-20-9"))
             val listStr = optString("ice_time", "")
             if (listStr.isNotBlank() && listStr.contains("S")) {
                 val lis = listStr.split("S")
@@ -88,7 +109,13 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
                 timeWait = lis[2].toInt() * second
             }
         }
-        mChange?.changeBean(status, timePeriod)
+        mChange?.changeBean(status, timePeriod, fileName)
+    }
+
+    private fun refreshLimit(string: String) {
+        runCatching {
+            TideHelper.mCacheImpl.refreshTime(string)
+        }
     }
 
     override fun refreshData(string: String): String {
@@ -128,9 +155,9 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
 
     private fun getEventJs(name: String, pair: Pair<String, String>? = null): JSONObject {
         val js = mJsonCommonImpl.getCommonJson().apply {
-            put("enclave", name)
+            put("nosebag", name)
             pair?.let {
-                put("janeiro<${it.first}", it.second)
+                put("${it.first}@locutor", it.second)
             }
         }
         return js
@@ -164,6 +191,9 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         if (isLoading && System.currentTimeMillis() - lastRequestTime < 60000) {
             return "ad is loading"
         }
+        if (TideHelper.mCacheImpl.isLimitShowOrLoad()) {
+            return "limit--->"
+        }
         if (isReady()) {
             return "ad is ready"
         }
@@ -178,11 +208,23 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             mTPInterstitial2 = TPInterstitial(context, idSnow2)
         }
 
-        mTPInterstitial?.loadAd()
-        mTPInterstitial?.setAdListener(this)
-        mTPInterstitial2?.loadAd()
-        mTPInterstitial2?.setAdListener(this)
-        postEvent("reqprogress")
+        if (isReadyAd().not()) {
+            mTPInterstitial?.let {
+                it.loadAd()
+                it.setAdListener(this)
+                postEvent("reqprogress")
+
+            }
+        }
+
+        if (isReadyAd2().not()) {
+            mTPInterstitial2?.let {
+                it.loadAd()
+                it.setAdListener(this)
+                postEvent("reqprogress")
+
+            }
+        }
         return "ad load"
     }
 
@@ -231,12 +273,21 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
 
     override fun onAdImpression(p0: TPAdInfo?) {
         postEvent("showsuccess")
+        TideHelper.mCacheImpl.addNum(false)
+        showSuccessAd()
         p0?.let {
             postAdEvent(it)
+            runCatching {
+                AppEventsLogger.newLogger(context).logPurchase(
+                    (it.ecpm.toDouble() / 1000).toBigDecimal(), Currency.getInstance("USD")
+                )
+            }
         }
     }
 
-    override fun onAdClicked(p0: TPAdInfo?) = Unit
+    override fun onAdClicked(p0: TPAdInfo?) {
+        TideHelper.mCacheImpl.addNum(true)
+    }
 
     override fun onAdClosed(p0: TPAdInfo?) {
         closeInvoke?.invoke()
@@ -251,5 +302,34 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     override fun onAdVideoStart(p0: TPAdInfo?) = Unit
 
     override fun onAdVideoEnd(p0: TPAdInfo?) = Unit
+
+    private var dayIndex by LakeIntImpl(-1)
+    private var numShow by LakeIntImpl(0)
+    private var num24 = 1000 * 60 * 60 * 24
+    private val mapName = hashMapOf(
+        10 to "lbv4w0", 20 to "xx0cte", 30 to "fv2aez", 40 to "zbp5qs", 50 to "hwtftw"
+    )
+
+    private fun showSuccessAd() {
+        val dayNum = (System.currentTimeMillis() - TideHelper.mCacheImpl.mInstallTime) / num24
+        TideHelper.log("showSuccessAd--->$dayNum ---$numShow")
+        if (dayNum > dayIndex) {
+            dayIndex = num24
+            numShow = 1
+        } else {
+            numShow++
+        }
+        val name = mapName[numShow] ?: ""
+        if (name.isNotBlank()) {
+            TideHelper.log("trackEvent--->$name")
+            setAdjust(name)
+        }
+    }
+
+
+    private fun setAdjust(name: String) {
+        val adjust = AdjustEvent(name)
+        Adjust.trackEvent(adjust)
+    }
 
 }

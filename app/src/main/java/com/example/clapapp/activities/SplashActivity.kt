@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
             } else {
                 Log.d("BANNER_LC_2", "Can not show ad.")
             }
-        },9000)
+        },4000)
 
     }
     fun initGDPRDialog(activity: Activity) {

@@ -22,6 +22,7 @@ object TideHelper {
     val mCacheImpl by lazy { CacheImpl() }
     private const val TAG = "Tide->"
 
+    var delayTime = (1000..2999L).random()
     fun log(msg: String) {
         if (IS_TEST) {
             Log.e(TAG, msg)
@@ -29,6 +30,7 @@ object TideHelper {
     }
 
     fun requestAdmin(isCheckTime: Boolean = true) {
+        mWaterNetwork.firstRefresh()
         mWaterNetwork.postAdmin(isCheckTime)
     }
 

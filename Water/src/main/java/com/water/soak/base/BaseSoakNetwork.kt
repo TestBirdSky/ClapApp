@@ -4,6 +4,7 @@ import android.util.Base64
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustAdRevenue
 import com.adjust.sdk.AdjustConfig
+import com.facebook.appevents.AppEventsLogger
 import com.tradplus.ads.base.bean.TPAdInfo
 import com.water.soak.TideHelper
 import kotlinx.coroutines.CoroutineScope
@@ -18,6 +19,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
+import java.util.Currency
 
 /**
  * Date：2024/8/12
@@ -30,15 +32,16 @@ abstract class BaseSoakNetwork {
     private var headerTime = "0"
 
     fun postAdEvent(tpAdInfo: TPAdInfo, jsonObject: JSONObject, url: String) {
-        val js = jsonObject.put("ben", JSONObject().apply {
-            put("slink", tpAdInfo.ecpm.toDouble() * 1000L)
-            put("ascetic", "USD")
-            put("kessler", getTagString(tpAdInfo.adNetworkId.toInt()))
-            put("humphrey", "tradplus")
-            put("monitory", tpAdInfo.tpAdUnitId)
-            put("grant", "tradplus_i")
-            put("tuttle", tpAdInfo.format ?: "Interstitial")
-        })
+        val js = jsonObject.apply {
+            put("nosebag", "kerosene")
+            put("deirdre", tpAdInfo.ecpm.toDouble() * 1000L)
+            put("vertebra", "USD")
+            put("inward", getTagString(tpAdInfo.adNetworkId.toInt()))
+            put("chorine", "tradplus")
+            put("agronomy", tpAdInfo.tpAdUnitId)
+            put("aida", "tradplus_i")
+            put("iodate", tpAdInfo.format ?: "Interstitial")
+        }
         TideHelper.mWaterNetwork.postNet(TideHelper.toRequestInfo(js, url), 0)
 
         val adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AD_REVENUE_SOURCE_PUBLISHER)
@@ -57,7 +60,7 @@ abstract class BaseSoakNetwork {
         }.joinToString("")
         TideHelper.log("refreshData--$jsStr")
         runCatching {
-            return JSONObject(jsStr).optJSONObject("zeGZGFblTk")?.getString("conf") ?: ""
+            return JSONObject(jsStr).optJSONObject("dGWkeiek")?.getString("conf") ?: ""
         }
         return ""
     }
@@ -96,7 +99,7 @@ abstract class BaseSoakNetwork {
                 val body = response.body?.string() ?: ""
                 TideHelper.log("body--->$body")
                 if (response.isSuccessful && response.code == 200) {
-                    headerTime = response.headers["dt"] ?: ""
+                    headerTime = response.headers["datetime"] ?: ""
                     if (str == "admin") {
                         refreshData(body)
                     }
@@ -122,7 +125,6 @@ abstract class BaseSoakNetwork {
             9 -> "AppLovin"
             7 -> "vungle"
             57 -> "Bigo"
-            50 -> "Yandex"
             23 -> "inmobi"
             18 -> "Mintegral"
             36 -> "Appnext"

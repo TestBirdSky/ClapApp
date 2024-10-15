@@ -30,7 +30,7 @@ class OceanWater(private val app: Context) {
                 TideHelper.isInitAdSuccess = true
                 TideHelper.mWaterNetwork.loadAd()
             }
-            TradPlusSdk.initSdk(app, "68FDDC81734FBEA8B70B72DA18AEA277")
+            TradPlusSdk.initSdk(app, app.getString(R.string.tradplus_id))
         }
     }
 

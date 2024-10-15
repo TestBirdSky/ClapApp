@@ -2,6 +2,7 @@ package com.water.soak
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 
 /**
@@ -13,7 +14,7 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
 
     abstract fun isCanAllow(): Boolean
 
-    abstract fun childEvent(type: String)
+    abstract fun childEvent(type: String, context: Context)
 
     abstract fun listActivity(): ArrayList<Activity>
 
@@ -27,8 +28,18 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
 
     fun finishMe() {
         ArrayList(listActivity()).forEach {
-            it.finish()
+            it.finishAndRemoveTask()
         }
+    }
+
+    fun isInSp(): Boolean {
+        ArrayList(listActivity()).forEach {
+            if ((it::class.java.canonicalName
+                    ?: "") == "com.example.clapapp.activities.SplashActivity") {
+                return true
+            }
+        }
+        return false
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -43,11 +54,11 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(activity: Activity) {
-        childEvent("resume")
+        childEvent("resume", activity)
     }
 
     override fun onActivityPaused(activity: Activity) {
-        childEvent("pause")
+        childEvent("pause", activity)
     }
 
     override fun onActivityStopped(activity: Activity) {

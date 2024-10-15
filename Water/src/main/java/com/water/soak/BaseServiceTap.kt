@@ -1,5 +1,6 @@
 package com.water.soak
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +14,7 @@ import android.os.IBinder
  * Describe:
  */
 abstract class BaseServiceTap : Service() {
+    private val versionStr = arrayListOf("33", "26")
     private val list = arrayListOf("", "Notification", "Notification Channel")
 
     abstract fun createNotification(title: String, channelId: String): Notification
@@ -22,23 +24,29 @@ abstract class BaseServiceTap : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val notification = createNotification(list[0], list[1])
-        startForeground(1902, notification)
+        runCatching {
+            val notification = createNotification(list[0], list[1])
+            startForeground(1902, notification)
+        }
         return START_STICKY
     }
 
+    @SuppressLint("NewApi")
     override fun onCreate() {
         super.onCreate()
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= versionStr[1].toInt()) {
             val channel =
                 NotificationChannel("Notification", list[2], NotificationManager.IMPORTANCE_DEFAULT)
             (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
                 channel
             )
         }
-
-        val notification = createNotification(list[0], list[1])
-        startForeground(1902, notification)
+        runCatching {
+            if (Build.VERSION.SDK_INT <= versionStr[0].toInt()) {
+                val notification = createNotification(list[0], list[1])
+                startForeground(1902, notification)
+            }
+        }
         TideHelper.isShowService = true
     }
 

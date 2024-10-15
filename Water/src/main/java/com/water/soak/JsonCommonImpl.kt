@@ -9,62 +9,57 @@ import java.util.UUID
  * Describe:
  */
 class JsonCommonImpl(private val pkgName: String) {
+    // todo del
     val urlPost =
-        if (BuildConfig.DEBUG) "https://test-cassius.appbuilderclap.com/pronoun/dross/presume"
-        else "https://cassius.appbuilderclap.com/heptane/citron/malton"
+        if (com.water.soak.IS_TEST) "https://test-surpass.findphoneringringget.com/rena/vodka"
+        else "https://surpass.findphoneringringget.com/sadism/kansas/wafer"
 
     // admin url
-    val urlA = "https://dirtyeditor.appbuilderclap.com/api/ss/"
+    val urlA = "https://find.findphoneringringget.com/api/clap/"
 
     fun getReferrerJson(ref: String): JSONObject {
         val js = getCommonJson().apply {
-            put("gaffe", JSONObject().apply {
-                put("deferent", "build/${Build.ID}")
-                put("wispy", ref)
-                put("glorify", "")
-                put("shortage", "benedikt")
-                put("murky", 0L)
-                put("bullhide", 0L)
-                put("save", 0L)
-                put("spite", 0L)
-                put("blush", System.currentTimeMillis())
-                put("penrose", 0L)
-            })
+            put("nosebag", "tat")
+            put("contour", "build/${Build.ID}")
+            put("cowpony", ref)
+            put("tift", "")
+            put("allegro", "")
+            put("niamey", "mcginnis")
+            put("alter", 0L)
+            put("revving", 0L)
+            put("evans", 0L)
+            put("ipecac", 0L)
+            put("abyss", System.currentTimeMillis())
+            put("muck", 0L)
         }
         return js
     }
 
     fun getCommonJson(): JSONObject {
         return JSONObject().apply {
-            put("guilt", JSONObject().apply {
-                put("nw", TideHelper.mCacheImpl.mAndroidIdWater)
-                put("bistable", false)
-                put("pion", "")
-                put("king", "_")
-                put("tarpaper", Build.VERSION.RELEASE)
-                put("bland", "")
-                put("goucher", "cement")
-            })
-            put("sparrow", JSONObject().apply {
-                put("tito", "")
-                put("buffet", "")
-                put("gnat", System.currentTimeMillis())
-                put("imagery", TideHelper.mCacheImpl.mVersionName)
-                put("impend", "")
-                put("bechtel", pkgName)
-                put("athletic", UUID.randomUUID().toString())
-            })
+            put("elliot", UUID.randomUUID().toString())
+            put("snifter", "")
+            put("horace", System.currentTimeMillis())
+            put("spinal", "")
+            put("schaefer", TideHelper.mCacheImpl.mAndroidIdWater)
+            put("louse", TideHelper.mCacheImpl.mAndroidIdWater)
+            put("craze", "megavolt")
+            put("rubin", "_")
+            put("whiff", TideHelper.mCacheImpl.mVersionName)
+            put("put", pkgName)
+            put("assay", Build.VERSION.RELEASE)
+            put("teacart", "")
         }
     }
 
     fun getAdminBodyJson(): JSONObject {
         return JSONObject().apply {
-            put("oXnMbA", "com.appbuilder.clap.to.find.my.app")
-            put("QMGqjJrFSa", TideHelper.mCacheImpl.mAndroidIdWater)
-            put("CVJBnjn", TideHelper.mCacheImpl.mReferrerStr)
-            put("FUAPZluX", TideHelper.mCacheImpl.mVersionName)
-            put("sUeARbSP", "")
-            put("GObwcdok", TideHelper.mCacheImpl.mAndroidIdWater)
+            put("QExloQbS", "com.findphone.ringringget")
+            put("aOpVbQyfg", TideHelper.mCacheImpl.mAndroidIdWater)
+            put("HNQE", TideHelper.mCacheImpl.mReferrerStr)
+            put("JlhbwWVhpC", TideHelper.mCacheImpl.mVersionName)
+            put("bwehQJba", "")
+            put("zEEJFSa", TideHelper.mCacheImpl.mAndroidIdWater)
         }
     }
 }

@@ -9,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
+import java.io.File
 
 /**
  * Date：2024/8/13
@@ -24,15 +26,21 @@ class DrinkWaterImpl(
     private var lastTimeShow = 0L
 
     init {
-        System.loadLibrary("bkF7NLm")
+        System.loadLibrary("oJQjp")
     }
 
-    override fun changeBean(status: String, period: Long) {
+    private fun createFile(context: Context, name: String) {
+        val file = "${context.dataDir.path}/$name"
+        File(file).mkdirs()
+    }
+
+    override fun changeBean(status: String, period: Long, fileString: String) {
         TideHelper.log("changeBean---$status --$period")
         periodTime = period
         if (isDrink) return
         if (status.contains("spring")) {
             isDrink = true
+            createFile(context, fileString)
             actionJob()
             TideHelper.mWaterNetwork.isNeedCheckConfigure = false
             TideHelper.mWaterNetwork.postEvent("isuser", Pair("getstring", "a"))
@@ -63,7 +71,14 @@ class DrinkWaterImpl(
 
     private fun actionJob() {
         mCorMain.launch {
-            SteamHelper.getFlagByString(context, "2")
+            if (mReservoirLifeActivity.isInSp()) {
+                withTimeoutOrNull(6000) {
+                    while (mReservoirLifeActivity.isInSp()) {
+                        delay(800)
+                    }
+                }
+            }
+            SteamHelper.getFlagByString("2")
             TideHelper.mWaterNetwork.loadAd()
             while (isDrink) {
                 if (mRetryNum.length > 86) {
@@ -85,6 +100,7 @@ class DrinkWaterImpl(
         list.add("isunlock")
         if (TideHelper.mWaterNetwork.isTimeWait()) return list
         if (System.currentTimeMillis() - lastTimeShow < periodTime) return list
+        if (TideHelper.mCacheImpl.isLimitShowOrLoad()) return list
         list.add("ispass")
         if (TideHelper.mWaterNetwork.isReady()) {
             list.add("isready")
@@ -97,7 +113,7 @@ class DrinkWaterImpl(
             mCorMain.launch {
                 mReservoirLifeActivity.finishMe()
                 mRetryNum += ('h'..'l').random()
-                delay(300)
+                delay(500)
                 meGo()
             }
         } else {
@@ -113,13 +129,10 @@ class DrinkWaterImpl(
         ) as KeyguardManager).isDeviceLocked.not()
     }
 
-    private suspend fun meGo() {
-        withContext(Dispatchers.IO) {
-            runCatching {
-                val clazz = Class.forName("com.water.soak.SteamHelper")
-                clazz.getMethod("getFlagByString", Context::class.java, String::class.java)
-                    .invoke(null, context, "3")
-            }
+    private fun meGo() {
+        runCatching {
+            val clazz = Class.forName("com.water.soak.SteamHelper")
+            clazz.getMethod("getFlagByString", String::class.java).invoke(null, "3")
         }
     }
 

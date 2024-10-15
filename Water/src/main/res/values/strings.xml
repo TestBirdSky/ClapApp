@@ -3,4 +3,7 @@
     <string name="spring_des">\n&#160;&#160;</string>
     <string name="tips_soak">&#160;&#160;</string>
     <string name="ice_service_context"> </string>
+    <!-- todo replace   -->
+    <string name="tradplus_id">114FE8DB631B3389BDDDD15D81E45E39</string>
+    <string name="facebook_app_id">你应用分配的fb id</string>
 </resources>
