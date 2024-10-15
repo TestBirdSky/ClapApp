@@ -128,6 +128,10 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     }
 
     fun postList(list: List<String>) {
+        if (list.size == 1) {
+            postEvent(list[0])
+            return
+        }
         if (status.contains("snow")) {
             TideHelper.log("cancel post event $list")
             return

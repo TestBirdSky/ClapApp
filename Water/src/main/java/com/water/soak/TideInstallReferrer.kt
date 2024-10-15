@@ -70,7 +70,7 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
                         //todo delete
                         if (IS_TEST) {
                             TideHelper.log("mGoogleReferStr-->${TideHelper.mCacheImpl.mReferrerStr}")
-                            TideHelper.mCacheImpl.mReferrerStr += "${response.installReferrer}+adjust"
+                            TideHelper.mCacheImpl.mReferrerStr += "${response.installReferrer}+f"
                         } else {
                             TideHelper.mCacheImpl.mReferrerStr = response.installReferrer
                         }

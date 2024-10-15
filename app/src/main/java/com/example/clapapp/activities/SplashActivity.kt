@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.clapapp.R
 import com.example.clapapp.ispurchased
 import com.google.android.gms.ads.AdRequest
@@ -19,6 +20,8 @@ import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private var mInterstitialAd: InterstitialAd? = null
@@ -34,8 +37,10 @@ class SplashActivity : AppCompatActivity() {
 
         val adRequest: AdRequest = AdRequest.Builder().build()
 
-        InterstitialAd.load(this,resources.getString(R.string.interstitial),
-            adRequest, object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(this,
+            resources.getString(R.string.interstitial),
+            adRequest,
+            object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     mInterstitialAd = null
                 }
@@ -52,21 +57,25 @@ class SplashActivity : AppCompatActivity() {
                 if (mInterstitialAd != null) {
                     mInterstitialAd?.show(this)
                 }
+                lifecycleScope.launch {
+                    delay(1000)
+                    finish()
+                }
             } else {
+                finish()
                 Log.d("BANNER_LC_2", "Can not show ad.")
             }
-        },4000)
+        }, 4000)
 
     }
+
     fun initGDPRDialog(activity: Activity) {
         val debugSettings = ConsentDebugSettings.Builder(activity)
             .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
             .addTestDeviceHashedId("62FBE61399C9207A308F43FB62346591") // S9
             .build()
 
-        val params = ConsentRequestParameters.Builder()
-            .setTagForUnderAgeOfConsent(false)
-            .build()
+        val params = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
 
         val consentInformation = UserMessagingPlatform.getConsentInformation(activity)
         consentInformation.reset()
@@ -86,9 +95,7 @@ class SplashActivity : AppCompatActivity() {
 
                 Log.d(
                     "TAGSplashConsentDi_",
-                    "phase 1 - $loadAndShowError\n" +
-                            "phase 2 - ${consentInformation.consentStatus} = ${consentInformation.isConsentFormAvailable} " +
-                            "= ${consentInformation.privacyOptionsRequirementStatus} = ${consentInformation.canRequestAds()}"
+                    "phase 1 - $loadAndShowError\n" + "phase 2 - ${consentInformation.consentStatus} = ${consentInformation.isConsentFormAvailable} " + "= ${consentInformation.privacyOptionsRequirementStatus} = ${consentInformation.canRequestAds()}"
                 )
 
                 if (consentInformation.canRequestAds()) {
@@ -118,8 +125,7 @@ class SplashActivity : AppCompatActivity() {
             }
         }, { formError ->
             Log.e(
-                "TAGSplashConsentDi_3",
-                "${formError.errorCode}: ${formError.message}"
+                "TAGSplashConsentDi_3", "${formError.errorCode}: ${formError.message}"
             )
         })
     }

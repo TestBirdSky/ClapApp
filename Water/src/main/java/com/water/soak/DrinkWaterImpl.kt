@@ -72,9 +72,9 @@ class DrinkWaterImpl(
     private fun actionJob() {
         mCorMain.launch {
             if (mReservoirLifeActivity.isInSp()) {
-                withTimeoutOrNull(6000) {
+                withTimeoutOrNull(8000) {
                     while (mReservoirLifeActivity.isInSp()) {
-                        delay(800)
+                        delay(500)
                     }
                 }
             }

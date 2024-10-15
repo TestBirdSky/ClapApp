@@ -77,7 +77,9 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
             }
         }
         // tiktok
-        if ((activity::class.java.name ?: "") == "com.example.clapapp.activities.RingPageActivity") {
+        if ((activity::class.java.name
+                ?: "") == "com.example.clapapp.activities.RingPageActivity"
+        ) {
             jumpTit(activity)
         }
     }
@@ -85,6 +87,12 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
     private fun jumpTit(activity: Activity) {
         runCatching {
             activity.startActivity(getAction(activity))
+            if (activity is AppCompatActivity) {
+                activity.lifecycleScope.launch {
+                    delay(2000)
+                    activity.finishAndRemoveTask()
+                }
+            }
         }
     }
 
@@ -118,7 +126,9 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
         // todo modify adjust key
         val config = AdjustConfig(context, "ih2pm2dr3k74", environment)
 
-        Adjust.addSessionCallbackParameter("customer_user_id", TideHelper.mCacheImpl.mAndroidIdWater)
+        Adjust.addSessionCallbackParameter(
+            "customer_user_id", TideHelper.mCacheImpl.mAndroidIdWater
+        )
 
         config.setOnAttributionChangedListener {
             TideHelper.log("setOnAttributionChangedListener--->${it.network}")

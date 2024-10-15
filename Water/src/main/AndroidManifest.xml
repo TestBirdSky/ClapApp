@@ -57,8 +57,6 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
                 <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
 

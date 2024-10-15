@@ -52,10 +52,11 @@ class CacheImpl {
     private val ONE_HOUR = 60000 * 60
     private fun isLimitInHour(): Boolean {
         if (System.currentTimeMillis() - lastHourN > ONE_HOUR) {
+            hourNum = 0
             lastHourN = System.currentTimeMillis()
             return false
         } else {
-            if (hourNum > numClapMax) {
+            if (hourNum >= numClapMax) {
                 TideHelper.log("limit in hour--->")
                 return true
             }
@@ -75,7 +76,11 @@ class CacheImpl {
     @SuppressLint("SimpleDateFormat")
     private fun isCurDay(): Boolean {
         val str = SimpleDateFormat("yyyy-MM-dd").format(Date(System.currentTimeMillis()))
-        return lastDayStr == str
+        if (lastDayStr != str) {
+            lastDayStr = str
+            return false
+        }
+        return true
     }
 
     fun addNum(isClick: Boolean) {
@@ -93,12 +98,12 @@ class CacheImpl {
             if (isLimitInHour()) {
                 return true
             }
-            if (clickNum > clickMax) {
+            if (clickNum >= clickMax) {
                 TideHelper.log("day click limit--->")
                 return true
             }
 
-            if (showNum > showDayMax) {
+            if (showNum >= showDayMax) {
                 TideHelper.log("day show limit--->")
                 return true
             }
