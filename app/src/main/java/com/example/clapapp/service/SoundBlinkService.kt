@@ -34,9 +34,7 @@ class SoundBlinkService : Service() {
     private lateinit var audioRecord: AudioRecord
     private val SAMPLE_RATE = 44100
     private val BUFFER_SIZE = AudioRecord.getMinBufferSize(
-        SAMPLE_RATE,
-        AudioFormat.CHANNEL_IN_MONO,
-        AudioFormat.ENCODING_PCM_16BIT
+        SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT
     )
     private val RINGING_AND_BLINKING_DURATION = 20000 // 30 seconds
     private var lastClapTime: Long = 0
@@ -58,10 +56,10 @@ class SoundBlinkService : Service() {
         val notification = NotificationCompat.Builder(this, "my_channel_id")
             .setContentTitle("Foreground Service Title")
             .setContentText("Foreground Service is running")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentIntent(pendingIntent)
-            .build()
-        startForeground(1, notification) // Use a unique notification ID
+            .setSmallIcon(R.drawable.ic_launcher_foreground).setContentIntent(pendingIntent).build()
+        runCatching {
+            startForeground(1, notification) // Use a unique notification ID
+        }
         Log.d("dhaush9876543", "onStartComand: ")
         return START_STICKY
     }
@@ -76,7 +74,9 @@ class SoundBlinkService : Service() {
         stopSoundAndFlash()
         Log.d("dhaush9876543", "onDestroy: ")
         stopFlashBlinking()
-        stopForeground(true)
+        runCatching {
+            stopForeground(true)
+        }
         saveBooleanToSharedPreferences(this, key, false)
         super.onDestroy()
     }
@@ -91,8 +91,7 @@ class SoundBlinkService : Service() {
 
     private fun startClapDetection() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.RECORD_AUDIO
+                this, android.Manifest.permission.RECORD_AUDIO
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             Toast.makeText(this, "Permission Required", Toast.LENGTH_SHORT).show()
@@ -216,7 +215,8 @@ class SoundBlinkService : Service() {
         val cameraId = cameraManager.cameraIdList.firstOrNull { id ->
             try {
                 val characteristics = cameraManager.getCameraCharacteristics(id)
-                val hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) ?: false
+                val hasFlash =
+                    characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) ?: false
 
                 // Check if this camera has a flash
                 hasFlash
@@ -236,6 +236,7 @@ class SoundBlinkService : Service() {
             Log.w(ContentValues.TAG, "No suitable camera with flashlight found.")
         }
     }
+
     private fun playSoundAndFlash2() {
         stopSoundAndFlash()
         // Play sound using MediaPlayer

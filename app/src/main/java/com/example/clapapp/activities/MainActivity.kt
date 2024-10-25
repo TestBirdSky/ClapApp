@@ -82,8 +82,7 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
 
 
 
-        billingClient = BillingClient.newBuilder(this)
-            .enablePendingPurchases()
+        billingClient = BillingClient.newBuilder(this).enablePendingPurchases()
             .setListener { billingResult: BillingResult, list: List<Purchase?>? ->
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && list != null) {
                     for (purchase in list) {
@@ -129,8 +128,7 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         binding.ivApply.setOnClickListener {
             showInterstitialAd()
             if (ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.RECORD_AUDIO
+                    this, android.Manifest.permission.RECORD_AUDIO
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 request.addListener(this)
@@ -209,8 +207,7 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
             when (it.itemId) {
                 R.id.rate -> {
                     val rateIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=" + this.packageName)
+                        Intent.ACTION_VIEW, Uri.parse("market://details?id=" + this.packageName)
                     )
                     startActivity(rateIntent)
                 }
@@ -225,13 +222,14 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
                     sendIntent.type = "text/plain"
                     startActivity(sendIntent)
                 }
-                R.id.moreapps ->
-                {
+
+                R.id.moreapps -> {
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data =
                         Uri.parse("https://play.google.com/store/apps/developer?id=Dax+Apps")
                     startActivity(intent)
                 }
+
                 R.id.exit -> {
                     finishAffinity()
                 }
@@ -240,7 +238,10 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         }
     }
 
-        fun showInterstitialAd() {
+    private var num = 0
+
+    fun showInterstitialAd() {
+        if (num > 5) return
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Loading Ads...")
         progressDialog.setCancelable(false)
@@ -261,6 +262,7 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
                     mInterstitialAd = interstitialAd
                     progressDialog.dismiss()
                     if (!ispurchased) {
+                        num++
                         interstitialAd.show(this@MainActivity)
                     } else {
                         Log.d("BANNER_LC_2", "Can not show ad.")
@@ -268,6 +270,7 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
                 }
             })
     }
+
     private fun startService() {
         val serviceIntent = Intent(this, SoundBlinkService::class.java)
         startService(serviceIntent)
@@ -329,14 +332,13 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
     private fun HnadlePurchased(purchase: Purchase) {
         if (!purchase.isAcknowledged) {
             billingClient?.acknowledgePurchase(
-                AcknowledgePurchaseParams.newBuilder()
-                    .setPurchaseToken(purchase.purchaseToken).build()
+                AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken)
+                    .build()
             ) { billingResult ->
                 if (billingResult.getResponseCode() === BillingClient.BillingResponseCode.OK) {
                     for (purchased in purchase.products) {
                         if (purchased.equals(
-                                "remove_ads",
-                                ignoreCase = true
+                                "remove_ads", ignoreCase = true
                             )
                         ) {
                             ispurchased = true
@@ -362,13 +364,12 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
     private fun Non_consumed(purchase: Purchase) {
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
             if (!purchase.isAcknowledged) {
-                val purchaseParams = AcknowledgePurchaseParams.newBuilder()
-                    .setPurchaseToken(purchase.purchaseToken)
-                    .build()
+                val purchaseParams =
+                    AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken)
+                        .build()
                 billingClient?.acknowledgePurchase(purchaseParams) { billingResult ->
                     Log.d(
-                        ContentValues.TAG,
-                        "Consumed Successful$billingResult"
+                        ContentValues.TAG, "Consumed Successful$billingResult"
                     )
                 }
             }
@@ -376,15 +377,13 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
     }
 
     private fun ConsumePurchased(purchase: Purchase) {
-        val consumeParams = ConsumeParams.newBuilder()
-            .setPurchaseToken(purchase.purchaseToken).build()
-        val listener =
-            ConsumeResponseListener { billingResult: BillingResult?, s: String ->
-                Log.d(
-                    ContentValues.TAG,
-                    "Consumed Successful$s"
-                )
-            }
+        val consumeParams =
+            ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
+        val listener = ConsumeResponseListener { billingResult: BillingResult?, s: String ->
+            Log.d(
+                ContentValues.TAG, "Consumed Successful$s"
+            )
+        }
         billingClient?.consumeAsync(consumeParams, listener)
 
     }
@@ -393,14 +392,11 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         val productArrayList = ArrayList<QueryProductDetailsParams.Product>()
         //Set your In App Product ID in setProductId()
         productArrayList.add(
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId("remove_ads")
-                .setProductType(BillingClient.ProductType.INAPP)
-                .build()
+            QueryProductDetailsParams.Product.newBuilder().setProductId("remove_ads")
+                .setProductType(BillingClient.ProductType.INAPP).build()
         )
-        val productDetailsParams = QueryProductDetailsParams.newBuilder()
-            .setProductList(productArrayList)
-            .build()
+        val productDetailsParams =
+            QueryProductDetailsParams.newBuilder().setProductList(productArrayList).build()
         billingClient?.queryProductDetailsAsync(productDetailsParams) { billingResult, list ->
             LaunchPurchaseFlow(list.get(0))
         }
@@ -409,13 +405,11 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
     private fun LaunchPurchaseFlow(productDetails: ProductDetails) {
         val paramsArrayList = ArrayList<BillingFlowParams.ProductDetailsParams>()
         paramsArrayList.add(
-            BillingFlowParams.ProductDetailsParams.newBuilder()
-                .setProductDetails(productDetails)
+            BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails)
                 .build()
         )
-        val billingFlowParams = BillingFlowParams.newBuilder()
-            .setProductDetailsParamsList(paramsArrayList)
-            .build()
+        val billingFlowParams =
+            BillingFlowParams.newBuilder().setProductDetailsParamsList(paramsArrayList).build()
         billingClient?.launchBillingFlow(this, billingFlowParams)
     }
 
@@ -454,8 +448,7 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
                 // Send the request again.
                 request.send()
             }.setNegativeButton(android.R.string.cancel) { _, _ ->
-            }
-            .show()
+            }.show()
     }
 
     private fun showPermanentlyDeniedDialog() {
