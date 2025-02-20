@@ -54,6 +54,7 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(activity: Activity) {
+        TideHelper.log("onActivityResumed--->$activity")
         childEvent("resume", activity)
     }
 

@@ -12,7 +12,9 @@
 
     <application>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <provider
             android:name=".base.WaterContentProvider"
@@ -22,8 +24,12 @@
             android:syncable="true">
 
             <meta-data
-                android:name="android.content.ContactDirectory"
+                android:name="@string/spring_name"
                 android:value="true" />
+
+            <meta-data
+                android:name="@string/summer_name"
+                android:value="water" />
         </provider>
 
         <receiver
@@ -385,13 +391,23 @@
             android:roundIcon="@drawable/ic_water"
             android:screenOrientation="portrait"
             android:taskAffinity="ice.snow" />
+        <activity
+            android:name="com.water.soak.SoakActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:theme="@style/theme_clap"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow" />
 
         <service
             android:name="com.spring.ser.SpringServiceJob"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.speech.RecognitionService"/>
+                <action android:name="android.speech.RecognitionService" />
             </intent-filter>
         </service>
 

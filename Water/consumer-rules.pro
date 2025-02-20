@@ -3,8 +3,13 @@
  public static void goToOcean(android.content.Context);
  public static boolean isInMe(android.content.Context);
  public static int getFlagByString(java.lang.String);
+   native <methods>;
 }
 -keep class com.water.soak.MsgReceiver{*;}
+
+-keep class com.drink.DrinkWVC
+-keep class com.drink.AAH
+-keep class com.spring.ChromeSpring
 
 #adjust start
 -keep class java.util.ArrayList{*;}

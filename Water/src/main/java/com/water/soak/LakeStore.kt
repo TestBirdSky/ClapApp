@@ -28,7 +28,7 @@ class LakeStore(private val des: String = "", val type: String = "normal") : Bas
         mCache = value
         saveValue(value)
         if (type == "referrer") {
-            TideHelper.requestAdmin(false)
+            TideHelper.requestAdmin()
         }
     }
 

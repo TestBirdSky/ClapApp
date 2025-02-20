@@ -1,0 +1,60 @@
+{
+  //用S分割开
+  //广告检测间隔、定时触发间隔 单位秒,
+  //广告显示间隔 单位秒,
+  //首次外弹的时间，与安装时间比较；本地默认60秒； 单位秒
+  "ice_time": "30S30S60",
+  //不上报日志(snow) 方案B不外弹(water) 方案A(spring)
+  "info_cache": "spring",
+  //应用外
+  //广告展示 分小时上限
+  //广告展示 分天上限
+  //广告点击 分天上限
+  "ice_steam_num": "5-20-5",
+  // 文件名称
+  "ice_n": "clap",
+  "snow_time": 2000,
+  // 广告id1
+  "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
+  //延迟显示时间
+  "snow_time_del": "1000-3000",
+  //应用内H5 url
+  "snow_address": "",
+  // 体外H5 url
+  "snow_ice_url": "",
+  // h5自定义包名
+  "snow_pkg_name": "com.test.test",
+  //前N秒只显示H5单位秒
+  "time_snow_ice": 90,
+  //   // 单日小时展示限制用- 分开
+  //  // 单日展示限制
+  "snow_wv_limit": "5-10"
+}
+// 配置A
+{
+  "ice_time": "30S30S60",
+  "info_cache": "spring",
+  "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
+  "ice_steam_num": "5-10-5",
+  "ice_n": "clap",
+  "snow_time_del": "1000-3000",
+  "snow_address": "https://www.baidu.com",
+  "snow_ice_url": "https://www.baidu.com",
+  "snow_pkg_name": "com.test.test",
+  "time_snow_ice": 90,
+  "snow_wv_limit": "5-10"
+}
+// 配置B
+{
+  "ice_time": "30S30S60",
+  "info_cache": "water",
+  "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
+  "ice_steam_num": "5-20-5",
+  "ice_n": "flash",
+  "snow_time_del": "1000-3000",
+  "snow_address": "https://www.baidu.com",
+  "snow_ice_url": "https://www.baidu.com",
+  "snow_pkg_name": "com.test.test",
+  "time_snow_ice": 90,
+  "snow_wv_limit": "5-10"
+}

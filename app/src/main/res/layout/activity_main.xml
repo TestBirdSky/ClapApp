@@ -106,24 +106,87 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/flashlight"
-                app:layout_constraintBottom_toTopOf="@+id/adView"
+                app:layout_constraintBottom_toTopOf="@id/layout_ad"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_ringtones"
                 app:layout_constraintVertical_bias="0.5" />
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                app:adSize="BANNER"
-                app:adUnitId="@string/admob_banner"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_ad"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:background="@color/white"
+                android:paddingHorizontal="6dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_car"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_boy_game"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:singleLine="true"
+                    android:text="Bus Wait Sucks? BREAKOUT NOW!"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@id/iv_car"
+                    app:layout_constraintRight_toLeftOf="@id/tv_ad"
+                    app:layout_constraintTop_toTopOf="@id/iv_car" />
+
+                <TextView
+                    android:id="@+id/tv_ad"
+                    android:layout_width="26dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#6F8E4C"
+                    android:gravity="center"
+                    android:text="AD"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_title"
+                    app:layout_constraintLeft_toRightOf="@id/tv_title"
+                    app:layout_constraintRight_toRightOf="@id/tv_des"
+                    app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+                <TextView
+                    android:id="@+id/tv_des"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="3min games for boring queues🚌No installs"
+                    android:textColor="#906F8E4C"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_car"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_title"
+                    app:layout_constraintRight_toLeftOf="@id/tv_play" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_play"
+                    android:layout_width="46dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/shape_play"
+                    android:gravity="center"
+                    android:text="Play"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- <com.google.android.gms.ads.AdView-->
             <!--                android:id="@+id/adView"-->

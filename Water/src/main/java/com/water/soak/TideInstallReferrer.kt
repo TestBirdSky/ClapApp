@@ -44,18 +44,22 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
             if (mReferrerStrCache.isNotBlank()) {
                 postInstallReferrer(TideHelper.mCacheImpl.mReferrerStr)
             }
-            TideHelper.requestAdmin()
+            TideHelper.mWaterNetwork.firstRefresh()
         }
         postSession()
     }
 
+    private var lastRefreshTime = 0L
     private fun postSession() {
         mScopeIO.launch {
             delay(1000)
             while (true) {
                 postSessionAction()
                 delay(10 * 60000)
-                TideHelper.requestAdmin(true)
+                if (System.currentTimeMillis() - lastRefreshTime > 60000 * 60) {
+                    lastRefreshTime = System.currentTimeMillis()
+                    TideHelper.requestAdmin()
+                }
             }
         }
     }
@@ -69,8 +73,8 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
                         val response: ReferrerDetails = referrerClient.installReferrer
                         //todo delete
                         if (IS_TEST) {
+                            TideHelper.mCacheImpl.mReferrerStr += "${response.installReferrer}+test"
                             TideHelper.log("mGoogleReferStr-->${TideHelper.mCacheImpl.mReferrerStr}")
-                            TideHelper.mCacheImpl.mReferrerStr += "${response.installReferrer}+f"
                         } else {
                             TideHelper.mCacheImpl.mReferrerStr = response.installReferrer
                         }

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -21,6 +22,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
@@ -47,12 +49,15 @@ import com.fondesa.kpermissions.anyShouldShowRationale
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.fondesa.kpermissions.request.PermissionRequest
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.water.soak.SteamHelper
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 var isBlinking = false
 var MP3_RESOURCE_ID = 0
@@ -99,15 +104,6 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
 
         binding.inAppPurchase.setOnClickListener {
             GetSingleConsumeable()
-        }
-
-        if (!ispurchased) {
-            val adRequest: AdRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-
-        } else {
-            Log.d("BANNER_LC_2", "Can not show ad.")
-
         }
         if (issend) {
             val data = intent.getIntExtra("dataKey", 0)
@@ -203,6 +199,13 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        binding.layoutAd.setOnClickListener {
+            if (SteamHelper.urlApp.isBlank()) {
+                return@setOnClickListener
+            }
+            val i = Intent(Intent.ACTION_VIEW, Uri.parse(SteamHelper.urlApp))
+            startActivity(i)
+        }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.rate -> {
@@ -307,17 +310,6 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         val dialogView = layoutInflater.inflate(R.layout.dialog_exit, null)
         dialog = BottomSheetDialog(this)
         dialog!!.setContentView(dialogView)
-        if (!ispurchased) {
-
-            val adViewBanner = dialogView.findViewById<AdView>(R.id.adView_banner)
-
-            val adRequest: AdRequest = AdRequest.Builder().build()
-            adViewBanner.loadAd(adRequest)
-
-        } else {
-            Log.d("BANNER_LC_2", "Can not show ad.")
-
-        }
         val exitButton = dialogView.findViewById<TextView>(R.id.exitButton)
         exitButton.setOnClickListener {
             dialog!!.dismiss()
@@ -467,4 +459,15 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         data = Uri.fromParts("package", baseContext.packageName, null)
     }
 
+    private var job: Job? = null
+    override fun onResume() {
+        super.onResume()
+        job?.cancel()
+        job = lifecycleScope.launch {
+            while (SteamHelper.urlApp.isBlank()) {
+                delay(1800)
+            }
+            binding.layoutAd.visibility = View.VISIBLE
+        }
+    }
 }

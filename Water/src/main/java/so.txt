@@ -1,0 +1,32 @@
+钟哥，麻烦提供一份上架GP的外弹 so代码。信息如下
+
+1.测试包名： com.demo.clap
+正式包名： com.appbuilder.clap.to.find.my.app
+
+2.隐藏图标规则:(注意BRAND数组和PATH数组对应关系):采用TV 的方式
+
+3.透明activity: "com.spring.WaterActivity"
+
+4.JobSchedulerService路径及文件名:const char *acPath = "com.spring.ser.SpringServiceJob";
+5.JNI路径和文件名,函数名:
+JNI路径和文件名:c/o/a/e/lh修改成你们想改的路径.例如:com/water/soak/SteamHelper
+jni函数:public static native int lakeStr(Context context,String i);
+6.广播路径：com/water/soak/MsgReceiver
+
+['com.findphone.ringringget', 'com.clap.test',  # 包名
+               'com.spring.WaterActivity',# 透明activity
+               'com.spring.ser.SpringServiceJob', # JobSchedulerService
+               'com/water/soak/MsgReceiver',  #  广播
+               'com.example.clapapp.activities.RingPageActivity','com.example.clapapp.activities.SplashActivity',  # 隐藏图标 other1","main2
+               'com/water/soak/SteamHelper', '"lakeStr"', # jni路径及函数
+               '/clap']# 外弹文件开关名
+
+               在main3.0 分支进行开发的
+
+['com.findphone.ringringget', 'com.clap.test',  # 包名
+                  'com/water/soak/SteamHelper',
+                   '"iceCore"','"springInit"', '"soakSeek"','"snowStr"',
+                  'com/drink/AAH',  # hander
+                  'com/drink/DrinkWVC',  # wvcClass WebViewClient
+                  'com/spring/ChromeSpring',  # WccClass WebChromeClient
+                  '/clap']#文件开关

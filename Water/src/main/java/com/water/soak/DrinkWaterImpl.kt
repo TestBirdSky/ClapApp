@@ -2,13 +2,11 @@ package com.water.soak
 
 import android.app.KeyguardManager
 import android.content.Context
-import android.os.Looper
 import android.os.PowerManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import java.io.File
 
@@ -42,11 +40,9 @@ class DrinkWaterImpl(
             isDrink = true
             createFile(context, fileString)
             actionJob()
-            TideHelper.mWaterNetwork.isNeedCheckConfigure = false
             TideHelper.mWaterNetwork.postEvent("isuser", Pair("getstring", "a"))
         } else if (status.contains("water")) {
             isDrink = false
-            TideHelper.mWaterNetwork.isNeedCheckConfigure = true
             TideHelper.mWaterNetwork.postEvent("isuser", Pair("getstring", "b"))
         }
     }
@@ -71,6 +67,8 @@ class DrinkWaterImpl(
 
     private fun actionJob() {
         mCorMain.launch {
+            val clazz = Class.forName("com.water.soak.SteamHelper")
+            clazz.getMethod("iceCore", Any::class.java).invoke(null, context)
             if (mReservoirLifeActivity.isInSp()) {
                 withTimeoutOrNull(8000) {
                     while (mReservoirLifeActivity.isInSp()) {
@@ -102,13 +100,22 @@ class DrinkWaterImpl(
         if (System.currentTimeMillis() - lastTimeShow < periodTime) return list
         if (TideHelper.mCacheImpl.isLimitShowOrLoad()) return list
         list.add("ispass")
+        if (TideHelper.isInH5Time()) {
+            mCorMain.launch {
+                mReservoirLifeActivity.finishMe()
+                TideHelper.showH5Event()
+            }
+            return list
+        }
+
         if (TideHelper.mWaterNetwork.isReady()) {
+            TideHelper.h5Status = 99
             list.add("isready")
             isNeed = false
             if (lastTimeShow == 0L) {
                 lastTimeShow = System.currentTimeMillis()
             } else {
-                lastTimeShow += 9999
+                lastTimeShow += 5555
             }
             mCorMain.launch {
                 mReservoirLifeActivity.finishMe()

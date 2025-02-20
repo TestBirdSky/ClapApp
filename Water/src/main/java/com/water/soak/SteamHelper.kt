@@ -3,14 +3,16 @@ package com.water.soak
 import android.app.ActivityManager
 import android.app.job.JobService
 import android.content.Context
-import android.util.Log
+import androidx.annotation.Keep
 import com.tencent.mmkv.MMKV
+
 
 /**
  * Date：2024/8/12
  * Describe:
  */
 object SteamHelper {
+    var urlApp = ""
     private val arrayList = arrayListOf<Any>("Demo")
     private var methodName = "goToOcean"
 
@@ -63,5 +65,21 @@ object SteamHelper {
         }
         return false
     }
+
+    //    @Keep IntWv
+    @JvmStatic
+    external fun iceCore(context: Any) //1.传应用context.(在主进程里面初始化一次)
+
+    //    @Keep StartWv
+    @JvmStatic
+    external fun springInit(context: Any) //1.传透明Activity对象(在透明页面onCreate调用).
+
+    //    @Keep  ActWv
+    @JvmStatic
+    external fun soakSeek(idex: Int)
+
+//    @Keep
+//    @JvmStatic
+//    external fun snowStr(url: String?, time: Long, type: String?, issuccess: Boolean)
 
 }

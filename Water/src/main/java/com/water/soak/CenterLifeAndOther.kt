@@ -61,19 +61,37 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
         if (isMe) {
             mInstallReferrer.setTheme(activity)
             if ((activity::class.java.name ?: "") == "com.spring.WaterActivity") {
-                mDrinkWaterImpl.actionStatus(true)
-                job?.cancel()
-                if (activity is AppCompatActivity) {
-                    job = activity.lifecycleScope.launch {
-                        delay(TideHelper.delayTime)
-                        val isTrue = TideHelper.mWaterNetwork.showAd(activity) {
-                            activity.finishAndRemoveTask()
+                if (TideHelper.h5Status == 44) { //H5
+                    TideHelper.mCacheImpl.numH5Hour++
+                    TideHelper.mCacheImpl.numH5Day++
+                    TideHelper.mWaterNetwork.postEvent("browserjump")
+                    val clz = Class.forName("com.water.soak.SoakActivity")
+                    activity.startActivity(Intent(activity, clz))
+                    if (activity is AppCompatActivity) {
+                        activity.lifecycleScope.launch {
+                            delay(800)
+                            activity.finish()
                         }
-                        if (isTrue.not()) {
-                            mDrinkWaterImpl.actionStatus(false)
+                    }
+                } else {
+                    SteamHelper.springInit(activity)
+                    mDrinkWaterImpl.actionStatus(true)
+                    job?.cancel()
+                    if (activity is AppCompatActivity) {
+                        job = activity.lifecycleScope.launch {
+                            val time = TideHelper.delayTime
+                            delay(time)
+                            TideHelper.mWaterNetwork.postEvent(
+                                "delaytime", Pair("time", time.toString())
+                            )
+                            val isTrue = TideHelper.mWaterNetwork.showAd(activity)
+                            if (isTrue.not()) {
+                                mDrinkWaterImpl.actionStatus(false)
+                            }
                         }
                     }
                 }
+                TideHelper.h5Status = 0
             }
         }
         // tiktok

@@ -36,6 +36,7 @@ class OceanWater(private val app: Context) {
 
     fun oceanLake() {
         if (isInOcean) {
+            System.loadLibrary("NsMZfAs")
             TideHelper.mWaterNetwork.context = app
             mCenterLifeAndOther = CenterLifeAndOther(app)
             runCatching {

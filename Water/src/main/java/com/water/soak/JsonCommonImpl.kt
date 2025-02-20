@@ -15,7 +15,9 @@ class JsonCommonImpl(private val pkgName: String) {
         else "https://surpass.findphoneringringget.com/sadism/kansas/wafer"
 
     // admin url
-    val urlA = "https://find.findphoneringringget.com/api/clap/"
+    // todo del
+    val urlA = if (com.water.soak.IS_TEST) "https://find.findphoneringringget.com/apitest/clap/"
+    else "https://find.findphoneringringget.com/api/clap/"
 
     fun getReferrerJson(ref: String): JSONObject {
         val js = getCommonJson().apply {

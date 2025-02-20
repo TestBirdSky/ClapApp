@@ -18,7 +18,11 @@ class CacheImpl {
     var mConfigure by LakeStore(type = "Configure")
     private var lastDayStr by LakeStore()
     var mInstallTime = 0L
-    var mVersionName = "1.0.0"
+    var mVersionName = "1.0.2"
+
+    var numH5Hour by LakeIntImpl(0)
+    var numH5Day by LakeIntImpl(0)
+
 
     fun initData(context: Context, isMe: Boolean) {
         if (mAndroidIdWater.isBlank()) {
@@ -53,6 +57,7 @@ class CacheImpl {
     private fun isLimitInHour(): Boolean {
         if (System.currentTimeMillis() - lastHourN > ONE_HOUR) {
             hourNum = 0
+            numH5Hour = 0
             lastHourN = System.currentTimeMillis()
             return false
         } else {
@@ -108,6 +113,7 @@ class CacheImpl {
                 return true
             }
         } else {
+            numH5Day = 0
             clickNum = 0
             showNum = 0
         }

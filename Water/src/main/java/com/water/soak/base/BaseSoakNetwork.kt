@@ -87,7 +87,7 @@ abstract class BaseSoakNetwork {
                 if (num > 0) {
                     firstFailed?.invoke()
                     mScopeIO.launch {
-                        delay(10000)
+                        delay(30000)
                         postNet(request, num - 1, str, failed, success)
                     }
                 } else {
@@ -108,7 +108,7 @@ abstract class BaseSoakNetwork {
                     if (num > 0) {
                         firstFailed?.invoke()
                         mScopeIO.launch {
-                            delay(13000)
+                            delay(45000)
                             postNet(request, num - 1, str, failed, success)
                         }
                     } else {
