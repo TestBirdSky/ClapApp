@@ -1,12 +1,9 @@
 package com.water.soak
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.water.soak.databinding.ClapLakeActivityBinding
@@ -46,18 +43,6 @@ class SoakActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                TideHelper.log("onPageFinished--->$url")
-            }
-
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                TideHelper.log("onPageStarted--->$url")
-            }
-        }
-
         binding.webView.apply {
             settings.javaScriptEnabled = true
             settings.userAgentString = "/${TideHelper.mWaterNetwork.stringNameH5}"
