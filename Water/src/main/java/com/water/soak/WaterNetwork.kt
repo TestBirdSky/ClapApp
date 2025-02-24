@@ -74,7 +74,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             mJsonCommonImpl.urlA,
             map = mapOf("datetime" to time)
         )
-        postNet(request, 4, failed = {
+        postNet(request, 3, failed = {
             if (TideHelper.mCacheImpl.mConfigure.isBlank()) {
                 refreshAdmin()
             }
@@ -92,7 +92,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
                 runCatching {
                     ref(JSONObject(TideHelper.mCacheImpl.mConfigure))
                 }
-                delay(Random.nextLong(1000, 8 * 60000))
+                delay(Random.nextLong(1000, 10 * 60000))
                 TideHelper.requestAdmin()
             }
         } else {
@@ -174,11 +174,12 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         return ""
     }
 
-    private var num = 9
+    private var num = 8
     private fun refreshAdmin() {
         if (num <= 0) return
         if (System.currentTimeMillis() - TideHelper.mCacheImpl.mInstallTime > 60000 * 10) return
         mScopeIO.launch {
+            num--
             delay(59000)
             postAdmin()
         }

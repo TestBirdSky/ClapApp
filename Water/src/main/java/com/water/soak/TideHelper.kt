@@ -47,7 +47,10 @@ object TideHelper {
         }.url(url).build()
     }
 
-    val delayTime get() = Random.nextLong(delayTimeStart, delayTimeEnd)
+    val delayTime: Long
+        get() = runCatching {
+            Random.nextLong(delayTimeStart, delayTimeEnd)
+        }.getOrNull() ?: Random.nextLong(1200, 1800)
 
     var delayTimeStart = 1000L
     var delayTimeEnd = 3000L

@@ -79,6 +79,7 @@ class TideInstallReferrer(val name: String) : BaseSoakNetwork() {
                             TideHelper.mCacheImpl.mReferrerStr = response.installReferrer
                         }
                         postInstallReferrer(TideHelper.mCacheImpl.mReferrerStr)
+                        TideHelper.requestAdmin()
                         referrerClient.endConnection()
                     } else {
                         referrerClient.endConnection()

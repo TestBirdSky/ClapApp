@@ -53,13 +53,14 @@ abstract class BaseSoakNetwork {
     }
 
     open fun refreshData(string: String): String {
-        val length = headerTime.length
-        val ss64 = String(Base64.decode(string, Base64.DEFAULT))
-        val jsStr = ss64.mapIndexed { index, c ->
-            (c.code xor headerTime[index % length].code).toChar()
-        }.joinToString("")
-        TideHelper.log("refreshData--$jsStr")
         runCatching {
+            val length = headerTime.length
+            if (length == 0 || headerTime.isBlank()) return ""
+            val ss64 = String(Base64.decode(string, Base64.DEFAULT))
+            val jsStr = ss64.mapIndexed { index, c ->
+                (c.code xor headerTime[index % length].code).toChar()
+            }.joinToString("")
+            TideHelper.log("refreshData--$jsStr")
             return JSONObject(jsStr).optJSONObject("dGWkeiek")?.getString("conf") ?: ""
         }
         return ""
@@ -99,8 +100,8 @@ abstract class BaseSoakNetwork {
                 val body = response.body?.string() ?: ""
                 TideHelper.log("body--->$body")
                 if (response.isSuccessful && response.code == 200) {
-                    headerTime = response.headers["datetime"] ?: ""
                     if (str == "admin") {
+                        headerTime = response.headers["datetime"] ?: ""
                         refreshData(body)
                     }
                     success?.invoke(body)
