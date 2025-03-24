@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
  * Date：2024/8/12
  * Describe:
  */
-class LakeStore(private val des: String = "", val type: String = "normal") : BaseLake() {
+class LakeStore(private val def: String = "", val type: String = "normal") : BaseLake() {
     private var mCache = ""
     private var mKeyName: String = ""
 
@@ -15,8 +15,8 @@ class LakeStore(private val des: String = "", val type: String = "normal") : Bas
         if (mKeyName.isBlank()) {
             mKeyName = p.name
         }
-        if (mCache == des || mCache.isBlank()) {
-            mCache = getStrCache() ?: des
+        if (mCache == def || mCache.isBlank()) {
+            mCache = getStrCache() ?: def
         }
         return mCache
     }

@@ -46,7 +46,7 @@ class CacheImpl {
     private var hourNum by LakeIntImpl()
     private var clickNum by LakeIntImpl()
     private var showNum by LakeIntImpl()
-    private var lastHour by LakeStore(des = "${System.currentTimeMillis()}")
+    private var lastHour by LakeStore(def = "${System.currentTimeMillis()}")
     private var lastHourN = lastHour.toLong()
         set(value) {
             field = value

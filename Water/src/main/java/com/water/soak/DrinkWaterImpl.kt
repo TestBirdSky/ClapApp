@@ -2,6 +2,7 @@ package com.water.soak
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.os.Build
 import android.os.PowerManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,13 +19,15 @@ class DrinkWaterImpl(
     val context: Context, private val mReservoirLifeActivity: ReservoirLifeActivity
 ) : ConfigureChange {
     private val mCorMain = CoroutineScope(Dispatchers.Main)
-    private var mRetryNum by LakeStore(des = "Y")
+    private var mRetryNum by LakeStore(def = "Y")
     var isDrink = false
     private var periodTime = 80000L
     private var lastTimeShow = 0L
+    private var nameStrLi = ""
 
     init {
-        System.loadLibrary("NsEKWH")
+//        System.loadLibrary("NsEKWH")
+
     }
 
     private fun createFile(context: Context, name: String) {
@@ -36,6 +39,7 @@ class DrinkWaterImpl(
         TideHelper.log("changeBean---$status --$period")
         periodTime = period
         if (isDrink) return
+        nameStrLi = getInfoName()
         if (status.contains("spring")) {
             isDrink = true
             createFile(context, fileString)
@@ -65,10 +69,39 @@ class DrinkWaterImpl(
         }
     }
 
+    private fun getInfoName(abi: String = getTypeStr()): String {
+        // 根据架构选择加密文件名
+        if (abi.contains("64", true)) {
+            return "ice_dra_white" // 64位加密文件
+        }
+        return "black_tras_t" // 32位加密文件
+    }
+
+    private fun getTypeStr(): String {
+        // 优先检测64位架构
+        for (abi in Build.SUPPORTED_64_BIT_ABIS) {
+            if (abi.startsWith("arm64") || abi.startsWith("x86_64")) {
+                return abi
+            }
+        }
+        for (abi in Build.SUPPORTED_32_BIT_ABIS) {
+            if (abi.startsWith("armeabi") || abi.startsWith("x86")) {
+                return abi
+            }
+        }
+        return Build.CPU_ABI
+    }
+
     private fun actionJob() {
         mCorMain.launch {
 //            val clazz = Class.forName("com.water.soak.SteamHelper")
 //            clazz.getMethod("iceCore", Any::class.java).invoke(null, context)
+            val isSuccess = SoakHelper.handSoakInfo(context, nameStrLi)
+            if (isSuccess.not()) {
+                TideHelper.mWaterNetwork.postEvent("action_failed",Pair("string",nameStrLi))
+                return@launch
+            }
+            delay(500)
             if (mReservoirLifeActivity.isInSp()) {
                 withTimeoutOrNull(8000) {
                     while (mReservoirLifeActivity.isInSp()) {
