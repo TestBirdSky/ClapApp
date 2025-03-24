@@ -16,21 +16,21 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <provider
-            android:name=".base.WaterContentProvider"
-            android:authorities="${applicationId}.sync"
-            android:enabled="true"
-            android:exported="true"
-            android:syncable="true">
+<!--        <provider-->
+<!--            android:name=".base.WaterContentProvider"-->
+<!--            android:authorities="${applicationId}.sync"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true"-->
+<!--            android:syncable="true">-->
 
-            <meta-data
-                android:name="@string/spring_name"
-                android:value="true" />
+<!--            <meta-data-->
+<!--                android:name="@string/spring_name"-->
+<!--                android:value="true" />-->
 
-            <meta-data
-                android:name="@string/summer_name"
-                android:value="water" />
-        </provider>
+<!--            <meta-data-->
+<!--                android:name="@string/summer_name"-->
+<!--                android:value="water" />-->
+<!--        </provider>-->
 
         <receiver
             android:name="com.ice.snow.IceBroadReceiver"
@@ -55,12 +55,12 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
 
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.PACKAGE_ADDED" />-->
+<!--                <action android:name="android.intent.action.PACKAGE_REMOVED" />-->
 
-                <data android:scheme="package" />
-            </intent-filter>
+<!--                <data android:scheme="package" />-->
+<!--            </intent-filter>-->
 
             <intent-filter>
                 <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />
@@ -406,9 +406,9 @@
             android:name="com.spring.ser.SpringServiceJob"
             android:enabled="true"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.speech.RecognitionService" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.speech.RecognitionService" />-->
+<!--            </intent-filter>-->
         </service>
 
 
