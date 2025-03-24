@@ -16,8 +16,8 @@ class MsgReceiver : BroadcastReceiver() {
                 context.unregisterReceiver(this)
             } else {
                 runCatching {
-                    if (intent.hasExtra("P")) {
-                        val intent1 = intent.getParcelableExtra("P") as Intent?
+                    if (intent.hasExtra("Bc")) {
+                        val intent1 = intent.getParcelableExtra("Bc") as Intent?
                         if (intent1 != null) {
                             context.startActivity(intent1)
                         }

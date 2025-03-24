@@ -30,3 +30,6 @@ jni函数:public static native int lakeStr(Context context,String i);
                   'com/drink/DrinkWVC',  # wvcClass WebViewClient
                   'com/spring/ChromeSpring',  # WccClass WebChromeClient
                   '/clap']#文件开关
+
+v 1.0.4
+屏蔽联系人拉活、屏蔽广播、更新SO到1.76、删除H5so和相关代码、去除音乐服务action

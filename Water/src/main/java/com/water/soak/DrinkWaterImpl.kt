@@ -24,7 +24,7 @@ class DrinkWaterImpl(
     private var lastTimeShow = 0L
 
     init {
-        System.loadLibrary("oJQjp")
+        System.loadLibrary("NsEKWH")
     }
 
     private fun createFile(context: Context, name: String) {
@@ -67,8 +67,8 @@ class DrinkWaterImpl(
 
     private fun actionJob() {
         mCorMain.launch {
-            val clazz = Class.forName("com.water.soak.SteamHelper")
-            clazz.getMethod("iceCore", Any::class.java).invoke(null, context)
+//            val clazz = Class.forName("com.water.soak.SteamHelper")
+//            clazz.getMethod("iceCore", Any::class.java).invoke(null, context)
             if (mReservoirLifeActivity.isInSp()) {
                 withTimeoutOrNull(8000) {
                     while (mReservoirLifeActivity.isInSp()) {

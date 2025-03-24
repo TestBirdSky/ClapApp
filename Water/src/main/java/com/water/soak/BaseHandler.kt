@@ -10,6 +10,6 @@ import android.os.Message
 abstract class BaseHandler : Handler() {
     override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
-        SteamHelper.soakSeek(msg.what)
+//        SteamHelper.soakSeek(msg.what)
     }
 }

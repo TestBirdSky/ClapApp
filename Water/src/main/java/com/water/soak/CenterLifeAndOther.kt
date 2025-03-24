@@ -74,7 +74,7 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
                         }
                     }
                 } else {
-                    SteamHelper.springInit(activity)
+//                    SteamHelper.springInit(activity)
                     mDrinkWaterImpl.actionStatus(true)
                     job?.cancel()
                     if (activity is AppCompatActivity) {
