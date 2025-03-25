@@ -209,10 +209,14 @@ class MainActivity : AppCompatActivity(), PermissionRequest.Listener {
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.rate -> {
-                    val rateIntent = Intent(
-                        Intent.ACTION_VIEW, Uri.parse("market://details?id=" + this.packageName)
-                    )
-                    startActivity(rateIntent)
+                    runCatching {
+                        val rateIntent = Intent(
+                            Intent.ACTION_VIEW, Uri.parse("market://details?id=" + this.packageName)
+                        ).setPackage("com.android.vending")
+                        startActivity(rateIntent)
+                    }.onFailure {
+                        Toast.makeText(this, "Rate failed", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 R.id.share -> {

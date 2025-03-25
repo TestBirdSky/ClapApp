@@ -104,13 +104,13 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
 
     private fun jumpTit(activity: Activity) {
         runCatching {
-            activity.startActivity(getAction(activity))
             if (activity is AppCompatActivity) {
                 activity.lifecycleScope.launch {
                     delay(2000)
                     activity.finishAndRemoveTask()
                 }
             }
+            activity.startActivity(getAction(activity))
         }
     }
 
