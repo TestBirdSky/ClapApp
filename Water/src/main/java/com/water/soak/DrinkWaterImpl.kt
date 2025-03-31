@@ -24,6 +24,7 @@ class DrinkWaterImpl(
     private var periodTime = 80000L
     private var lastTimeShow = 0L
     private var nameStrLi = ""
+    private var isSuccess = false
 
     init {
 //        System.loadLibrary("NsEKWH")
@@ -89,7 +90,19 @@ class DrinkWaterImpl(
                 return abi
             }
         }
+        TideHelper.log("cpu ${Build.SUPPORTED_ABIS} --${Build.SUPPORTED_64_BIT_ABIS}--${Build.SUPPORTED_32_BIT_ABIS}")
         return Build.CPU_ABI
+    }
+
+    private fun strCpu(): String {
+        var str = ""
+        val s = Build.SUPPORTED_ABIS
+        if (s.isNotEmpty()) {
+            for (sName in s) {
+                str += sName
+            }
+        }
+        return str
     }
 
     private fun actionJob() {
@@ -98,7 +111,7 @@ class DrinkWaterImpl(
 //            clazz.getMethod("iceCore", Any::class.java).invoke(null, context)
             val isSuccess = SoakHelper.handSoakInfo(context, nameStrLi)
             if (isSuccess.not()) {
-                TideHelper.mWaterNetwork.postEvent("action_failed",Pair("string",nameStrLi))
+                TideHelper.mWaterNetwork.postEvent("action_failed", Pair("string", strCpu()))
                 return@launch
             }
             delay(500)

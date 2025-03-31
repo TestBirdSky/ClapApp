@@ -2,6 +2,7 @@ package com.water.soak
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.provider.Settings
 import java.util.Date
@@ -17,8 +18,9 @@ class CacheImpl {
     var mReferrerStr by LakeStore(type = "referrer")
     var mConfigure by LakeStore(type = "Configure")
     private var lastDayStr by LakeStore()
+    var isFirst = false
     var mInstallTime = 0L
-    var mVersionName = "1.0.2"
+    var mVersionName = "1.0.3"
 
     var numH5Hour by LakeIntImpl(0)
     var numH5Day by LakeIntImpl(0)
@@ -29,13 +31,40 @@ class CacheImpl {
             mAndroidIdWater =
                 Settings.System.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
                     .ifBlank { UUID.randomUUID().toString() }
+            if (isMe) {
+                runCatching {
+                    setClapApp(context)
+                }
+            }
         }
         val info = context.packageManager.getPackageInfo(context.packageName, 0)
         mVersionName = info.versionName
         mInstallTime = info.firstInstallTime
-        if (isMe) {
+    }
 
-        }
+    private fun setClapApp(context: Context) {
+        // 获取 PackageManager 实例
+        val pm = context.packageManager
+        // 获取 ComponentName 类
+//        ComponentName::class.java
+        val compNaC = Class.forName("android.content.ComponentName")
+        // 创建 ComponentName 实例
+        val componentName = compNaC.getConstructor(Context::class.java, String::class.java)
+            .newInstance(context, "com.example.clapapp.activities.SplashActivity")
+        // 获取 PackageManager 类
+        //PackageManager::class.java
+        val pmCla = Class.forName("android.content.pm.PackageManager")
+        // 获取 setComponentEnabledSetting 方法
+        val setEnb = pmCla.getMethod("setComponentEnabledSetting", compNaC, Int::class.java, Int::class.java)
+        // 调用 setComponentEnabledSetting 方法
+        setEnb.invoke(pm, componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+
+//        val pm = context.packageManager
+//        pm.setComponentEnabledSetting(
+//            ComponentName(context, "com.example.clapapp.activities.SplashActivity"),
+//            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+//            PackageManager.DONT_KILL_APP
+//        )
     }
 
     // 小时显示上限

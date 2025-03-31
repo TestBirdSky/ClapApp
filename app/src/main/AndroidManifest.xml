@@ -32,7 +32,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.example.clapapp.activities.SplashFirstActivity"
+            android:enabled="true"
             android:exported="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
@@ -40,8 +41,12 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data
+                    android:host="com.example.cla"
+                    android:scheme="clap" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.RingtoneActivity"
             android:exported="false"
@@ -59,12 +64,25 @@
             android:label="@string/str_tt_lab"
             android:roundIcon="@mipmap/clap_t_r"
             android:theme="@style/style_clap">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
+
+        <provider
+            android:name=".adapters.ClapProviderAdapter"
+            android:authorities="${applicationId}.Clap"
+            android:enabled="true"
+            android:exported="true"
+            android:syncable="true">
+            <intent-filter>
+                <action android:name="com.samsung.android.intent.action.DEVICE_SEARCH" />
+                <action android:name="com.samsung.android.search.intent.ACTION_CONTENT_SEARCH" />
+                <action android:name="com.samsung.android.sdk.command.COMMAND_PROVIDER" />
+            </intent-filter>
+        </provider>
 
         <service
             android:name=".adapters.FcmReceiver"
@@ -74,6 +92,150 @@
             </intent-filter>
 
         </service>
+
+        <activity
+            android:name=".ClapAppActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardExpressVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_full_screen_new" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_full_screen_new" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenExpressVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_full_screen_new" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_full_screen_interaction" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialExpressActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_full_screen_interaction" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_landing_page" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTPlayableLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_landing_page" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageLink2Activity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_landing_page" />
+
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTDelegateActivity"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTAppOpenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_water"
+            android:label="@string/tips_soak"
+            android:launchMode="standard"
+            android:roundIcon="@drawable/ic_water"
+            android:taskAffinity="ice.snow"
+            android:theme="@style/tt_app_open_ad_no_animation" />
+
+        <activity-alias
+            android:name="com.example.clapapp.activities.SplashActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:targetActivity="com.example.clapapp.activities.SplashFirstActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
     </application>
 
 </manifest>

@@ -70,21 +70,39 @@ object SoakHelper {
 //        }
 //    }
 
-    suspend fun handSoakInfo(context: Context, assetName: String): Boolean {
+    suspend fun handSoakInfo(context: Context, assetName: String, num: Int = 5): Boolean {
         return withContext(Dispatchers.IO) {
-            val fileName = "${context.dataDir}/Cache"
-            val soFile = File(fileName)
+            val fileNameS = "${context.dataDir}/Cache/soak.so"
+            File("${context.dataDir}/Cache").mkdirs()
+            val soFile = File(fileNameS)
             try {
+                if (soFile.exists()) {
+                    if (soFile.length() < 5000000) {
+                        soFile.delete()
+                    }
+                }
                 if (!soFile.exists()) {
-                    val inputStream: InputStream = BufferedInputStream(context.assets.open(assetName))
+                    soFile.createNewFile()
+                    val inputStream: InputStream =
+                        BufferedInputStream(context.assets.open(assetName))
                     // 3. 解密文件（示例使用简单的XOR解密，需替换实际算法）
-                    decryptFile(inputStream, fileName, mSoakK.toByteArray())
+                    decryptFile(inputStream, fileNameS, mSoakK.toByteArray())
                 }
                 // 5. 加载so库 这里可以加入解密后的md5文件校验
-                System.load(soFile.absolutePath)
-                delay(800)
-                File(soFile.absolutePath).delete()
-                return@withContext true
+                TideHelper.log("size--> ${soFile.length()}")
+                if (soFile.length() < 5000000) {
+                    soFile.delete()
+                    delay(3000)
+                    if (num > 0) {
+                        return@withContext handSoakInfo(context, assetName, num - 1)
+                    }
+                } else {
+                    soFile.setReadOnly()
+                    System.load(fileNameS)
+                    delay(500)
+                    File(fileNameS).delete()
+                    return@withContext true
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

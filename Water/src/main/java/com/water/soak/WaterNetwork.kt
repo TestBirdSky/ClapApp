@@ -180,7 +180,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         if (System.currentTimeMillis() - TideHelper.mCacheImpl.mInstallTime > 60000 * 10) return
         mScopeIO.launch {
             num--
-            delay(59000)
+            delay(60001)
             postAdmin()
         }
     }

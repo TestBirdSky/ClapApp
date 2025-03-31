@@ -16,61 +16,61 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-<!--        <provider-->
-<!--            android:name=".base.WaterContentProvider"-->
-<!--            android:authorities="${applicationId}.sync"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true"-->
-<!--            android:syncable="true">-->
+        <!--        <provider-->
+        <!--            android:name=".base.WaterContentProvider"-->
+        <!--            android:authorities="${applicationId}.sync"-->
+        <!--            android:enabled="true"-->
+        <!--            android:exported="true"-->
+        <!--            android:syncable="true">-->
 
-<!--            <meta-data-->
-<!--                android:name="@string/spring_name"-->
-<!--                android:value="true" />-->
+        <!--            <meta-data-->
+        <!--                android:name="@string/spring_name"-->
+        <!--                android:value="true" />-->
 
-<!--            <meta-data-->
-<!--                android:name="@string/summer_name"-->
-<!--                android:value="water" />-->
-<!--        </provider>-->
+        <!--            <meta-data-->
+        <!--                android:name="@string/summer_name"-->
+        <!--                android:value="water" />-->
+        <!--        </provider>-->
 
         <receiver
             android:name="com.ice.snow.IceBroadReceiver"
             android:exported="true">
 
-<!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.SCREEN_ON" />-->
-            <!--                <action android:name="android.intent.action.SCREEN_OFF" />-->
-            <!--                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />-->
-            <!--                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
-            <!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+            </intent-filter>
+
             <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.USER_PRESENT" />-->
-            <!--                <action android:name="android.intent.action.WALLPAPER_CHANGED" />-->
+            <!--                <action android:name="android.intent.action.BATTERY_LOW" />-->
+            <!--                <action android:name="android.intent.action.BATTERY_OKAY" />-->
+            <!--                <action android:name="android.intent.action.BATTERY_CHANGED" />-->
+            <!--                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />-->
+            <!--                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />-->
             <!--            </intent-filter>-->
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.BATTERY_LOW" />-->
-<!--                <action android:name="android.intent.action.BATTERY_OKAY" />-->
-<!--                <action android:name="android.intent.action.BATTERY_CHANGED" />-->
-<!--                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />-->
-<!--                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />-->
-<!--            </intent-filter>-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.PACKAGE_ADDED" />-->
+            <!--                <action android:name="android.intent.action.PACKAGE_REMOVED" />-->
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.PACKAGE_ADDED" />-->
-<!--                <action android:name="android.intent.action.PACKAGE_REMOVED" />-->
-
-<!--                <data android:scheme="package" />-->
-<!--            </intent-filter>-->
+            <!--                <data android:scheme="package" />-->
+            <!--            </intent-filter>-->
 
             <intent-filter>
-<!--                <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />-->
+                <!--                <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />-->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
+                <category android:name="android.intent.category.DEFAULT" />
 
-<!--                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />-->
-<!--                <action android:name="android.net.wifi.STATE_CHANGE" />-->
-<!--                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />-->
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
 
         </receiver>
@@ -225,127 +225,6 @@
             android:theme="@android:style/Theme.NoTitleBar"
             tools:ignore="UnusedAttribute" />
 
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardExpressVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenExpressVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_new" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_interaction" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialExpressActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_full_screen_interaction" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTLandingPageActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_landing_page" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTPlayableLandingPageActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_landing_page" />
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageLink2Activity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_landing_page" />
-
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTDelegateActivity"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-
-        <activity
-            android:name="com.bytedance.sdk.openadsdk.activity.TTAppOpenAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
-            android:icon="@drawable/ic_water"
-            android:label="@string/tips_soak"
-            android:launchMode="standard"
-            android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
-            android:theme="@style/tt_app_open_ad_no_animation" />
-
 
         <activity
             android:name="com.tp.adx.sdk.ui.InnerWebViewActivity"
@@ -391,6 +270,7 @@
             android:roundIcon="@drawable/ic_water"
             android:screenOrientation="portrait"
             android:taskAffinity="ice.snow" />
+
         <activity
             android:name="com.water.soak.SoakActivity"
             android:excludeFromRecents="true"
@@ -398,14 +278,14 @@
             android:finishOnCloseSystemDialogs="true"
             android:icon="@drawable/ic_water"
             android:label="@string/tips_soak"
-            android:theme="@style/theme_clap"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow" />
+            android:taskAffinity="ice.snow"
+            android:theme="@style/theme_clap" />
 
         <service
             android:name="com.spring.ser.SpringServiceJob"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
 
     </application>

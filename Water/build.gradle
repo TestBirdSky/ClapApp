@@ -89,7 +89,7 @@ dependencies {
     // Pangle
     implementation 'com.tradplusad:tradplus-pangle:19.12.4.20.1'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
-    implementation 'com.pangle.global:ads-sdk:6.1.0.9'
+    api 'com.pangle.global:ads-sdk:6.1.0.9'
     // Inmobi
     implementation 'com.tradplusad:tradplus-inmobix:23.12.4.20.1'
     implementation 'com.inmobi.monetization:inmobi-ads-kotlin:10.7.5'

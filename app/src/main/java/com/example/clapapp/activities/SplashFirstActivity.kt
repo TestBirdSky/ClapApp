@@ -23,7 +23,7 @@ import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashActivity : AppCompatActivity() {
+class SplashFirstActivity : AppCompatActivity() {
     private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
