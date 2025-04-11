@@ -354,6 +354,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
     override fun onAdImpression(p0: TPAdInfo?) {
         postEvent("showsuccess")
         TideHelper.mCacheImpl.addNum(false)
+        DrinkWaterImpl.lastTimeShow = System.currentTimeMillis()
         showSuccessAd()
         p0?.let {
             postAdEvent(it)

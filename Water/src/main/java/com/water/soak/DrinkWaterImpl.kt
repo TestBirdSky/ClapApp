@@ -22,9 +22,15 @@ class DrinkWaterImpl(
     private var mRetryNum by LakeStore(def = "Y")
     var isDrink = false
     private var periodTime = 80000L
-    private var lastTimeShow = 0L
+
+    //    private var lastTimeShow = 0L
     private var nameStrLi = ""
     private var isSuccess = false
+
+    companion object {
+        var lastTimeShow = 0L
+    }
+
 
     init {
 //        System.loadLibrary("NsEKWH")
@@ -61,7 +67,7 @@ class DrinkWaterImpl(
 
     override fun actionStatus(isSuccess: Boolean) {
         if (isSuccess) {
-            mRetryNum = "S"
+            mRetryNum = ""
             TideHelper.mWaterNetwork.postEvent("startup")
             lastTimeShow = System.currentTimeMillis()
         } else {
@@ -138,8 +144,7 @@ class DrinkWaterImpl(
 
     private var isNeed = false
     private fun actionCheck(): List<String> {
-        TideHelper.log("actionCheck---$mRetryNum")
-        val list = arrayListOf<String>("time")
+        val list = arrayListOf("time")
         if (isDeviceUnLocked(context).not()) return list
         list.add("isunlock")
         if (TideHelper.mWaterNetwork.isTimeWait()) return list
@@ -158,11 +163,6 @@ class DrinkWaterImpl(
             TideHelper.h5Status = 99
             list.add("isready")
             isNeed = false
-            if (lastTimeShow == 0L) {
-                lastTimeShow = System.currentTimeMillis()
-            } else {
-                lastTimeShow += 5555
-            }
             mCorMain.launch {
                 mReservoirLifeActivity.finishMe()
                 mRetryNum += ('h'..'l').random()
