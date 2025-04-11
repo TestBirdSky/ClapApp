@@ -15,7 +15,6 @@ jni函数:public static native int lakeStr(Context context,String i);
 
 ['com.findphone.ringringget', 'com.clap.test',  # 包名
                'com.spring.WaterActivity',# 透明activity
-               'com.spring.ser.SpringServiceJob', # JobSchedulerService
                'com/water/soak/MsgReceiver',  #  广播
                'com.example.clapapp.activities.RingPageActivity','com.example.clapapp.activities.SplashActivity',  # 隐藏图标 other1","main2
                'com/water/soak/SteamHelper', '"lakeStr"', # jni路径及函数

@@ -3,7 +3,6 @@ package com.water.soak
 import android.app.ActivityManager
 import android.app.job.JobService
 import android.content.Context
-import androidx.annotation.Keep
 import com.tencent.mmkv.MMKV
 
 
@@ -13,6 +12,7 @@ import com.tencent.mmkv.MMKV
  */
 object SteamHelper {
     var urlApp = ""
+    var isInSteam = false
     private val arrayList = arrayListOf<Any>("Demo")
     private var methodName = "goToOcean"
 
@@ -39,13 +39,13 @@ object SteamHelper {
     @JvmStatic
     external fun lakeStr(string: String, boolean: Boolean): String
 
-    // 隐藏 2 外弹是 3
+    // 隐藏2 外弹是 3
     @JvmStatic
     fun getFlagByString(type: String): Int {
         runCatching {
             val clazz = Class.forName("com.water.soak.SteamHelper")
             clazz.getMethod("lakeStr", String::class.java, Boolean::class.java)
-                .invoke(null, "${arrayList[type.toInt()]}", false)
+                .invoke(null, "${arrayList[type.toInt()]}", true)
         }
         return type.toInt()
     }
@@ -79,8 +79,13 @@ object SteamHelper {
 //    @JvmStatic
 //    external fun soakSeek(idex: Int)
 
-//    @Keep
+    //    @Keep
 //    @JvmStatic
 //    external fun snowStr(url: String?, time: Long, type: String?, issuccess: Boolean)
+    val mSoakOpenAdImpl by lazy { SoakOpenAdImpl() }
 
+    @JvmStatic
+    fun ssSoak(string: String): Any? {
+        return TideHelper.inFoUri(string)
+    }
 }

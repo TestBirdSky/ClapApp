@@ -32,13 +32,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="This action contain ads"
         android:textColor="@color/black"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/progressBar1"
         app:layout_constraintStart_toStartOf="@+id/progressBar1"
         app:layout_constraintTop_toBottomOf="@+id/progressBar1" />
+
+    <FrameLayout
+        android:id="@+id/ad_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -282,10 +282,10 @@
             android:taskAffinity="ice.snow"
             android:theme="@style/theme_clap" />
 
-        <service
-            android:name="com.spring.ser.SpringServiceJob"
-            android:enabled="true"
-            android:exported="true" />
+<!--        <service-->
+<!--            android:name="com.spring.ser.SpringServiceJob"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" />-->
 
 
     </application>

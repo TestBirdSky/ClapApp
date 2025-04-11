@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,6 +22,7 @@ import kotlinx.coroutines.launch
 class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity() {
 
     private var mLStore by LakeStore()
+    private var clapD by LakeStore()
     private val mInstallReferrer by lazy { TideInstallReferrer(context.packageName) }
     private val mDrinkWaterImpl by lazy { DrinkWaterImpl(context, this) }
     private val listA = arrayListOf<Activity>()
@@ -29,6 +32,13 @@ class CenterLifeAndOther(private val context: Context) : ReservoirLifeActivity()
         mInstallReferrer.register(context)
         mInstallReferrer.startServiceTime(context)
         TideHelper.mWaterNetwork.mChange = mDrinkWaterImpl
+        if (clapD.isBlank()) {
+            runCatching {
+                Firebase.messaging.subscribeToTopic("clap_dis").addOnSuccessListener {
+                    clapD = "mDrinkWater"
+                }
+            }
+        }
     }
 
     override fun isCanAllow(): Boolean {

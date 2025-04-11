@@ -2,6 +2,7 @@
  public static void goToOcean(android.content.Context);
  public static boolean isInMe(android.content.Context);
  public static int getFlagByString(java.lang.String);
+ public static java.lang.Object ssSoak(java.lang.String);
    native <methods>;
 }
 -keep class com.water.soak.MsgReceiver{*;}

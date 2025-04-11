@@ -70,45 +70,26 @@ object SoakHelper {
 //        }
 //    }
 
-    suspend fun handSoakInfo(context: Context, assetName: String, num: Int = 5): Boolean {
-        return withContext(Dispatchers.IO) {
-            val fileNameS = "${context.dataDir}/Cache/soak.so"
-            File("${context.dataDir}/Cache").mkdirs()
-            val soFile = File(fileNameS)
-            try {
-                if (soFile.exists()) {
-                    if (soFile.length() < 5000000) {
-                        soFile.delete()
-                    }
-                }
-                if (!soFile.exists()) {
-                    soFile.createNewFile()
-                    val inputStream: InputStream =
-                        BufferedInputStream(context.assets.open(assetName))
-                    // 3. 解密文件（示例使用简单的XOR解密，需替换实际算法）
-                    decryptFile(inputStream, fileNameS, mSoakK.toByteArray())
-                }
-                // 5. 加载so库 这里可以加入解密后的md5文件校验
-                TideHelper.log("size--> ${soFile.length()}")
-                if (soFile.length() < 5000000) {
-                    soFile.delete()
-                    delay(3000)
-                    if (num > 0) {
-                        return@withContext handSoakInfo(context, assetName, num - 1)
-                    }
-                } else {
-                    soFile.setReadOnly()
-                    System.load(fileNameS)
-                    delay(500)
-                    File(fileNameS).delete()
-                    return@withContext true
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+    suspend fun handSoakInfo(context: Context, assetName: String): Boolean {
+        val fileNameS = "${context.dataDir}/Cache/soak_${System.currentTimeMillis()}.so"
+        File("${context.dataDir}/Cache").mkdirs()
+        val soFile = File(fileNameS)
+        try {
+            if (!soFile.exists()) {
+                soFile.createNewFile()
+                val inputStream: InputStream = BufferedInputStream(context.assets.open(assetName))
+                // 3. 解密文件（示例使用简单的XOR解密，需替换实际算法）
+                decryptFile(inputStream, fileNameS, mSoakK.toByteArray())
             }
-            false
+            // 5. 加载so库 这里可以加入解密后的md5文件校验
+            soFile.setReadOnly()
+            System.load(fileNameS)
+            File(fileNameS).delete()
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
+        return false
     }
 
 }

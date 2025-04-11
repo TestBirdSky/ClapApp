@@ -32,10 +32,9 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
         }
     }
 
-    fun isInSp(): Boolean {
+    fun isInCache(): Boolean {
         ArrayList(listActivity()).forEach {
-            if ((it::class.java.canonicalName
-                    ?: "") == "com.example.clapapp.activities.SplashActivity") {
+            if ((it::class.java.canonicalName ?: "") == "com.example.clapapp.activities.SplashFirstActivity") {
                 return true
             }
         }
@@ -50,6 +49,7 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityStarted(activity: Activity) {
         num++
+        SteamHelper.isInSteam = true
         inAppStatus(true)
     }
 
@@ -66,6 +66,7 @@ abstract class ReservoirLifeActivity : Application.ActivityLifecycleCallbacks {
         num--
         if (num <= 0) {
             num = 0
+            SteamHelper.isInSteam = false
             inAppStatus(false)
             if (isCanAllow()) {
                 ArrayList(listActivity()).forEach {

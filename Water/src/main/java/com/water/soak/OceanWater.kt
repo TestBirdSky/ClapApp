@@ -26,6 +26,7 @@ class OceanWater(private val app: Context) {
         isInOcean = app.packageName == app.getCtx()
         TideHelper.mCacheImpl.initData(app, isInOcean)
         if (isInOcean) {
+            System.loadLibrary("ringgetv")
             TradPlusSdk.setTradPlusInitListener {
                 TideHelper.isInitAdSuccess = true
                 TideHelper.mWaterNetwork.loadAd()

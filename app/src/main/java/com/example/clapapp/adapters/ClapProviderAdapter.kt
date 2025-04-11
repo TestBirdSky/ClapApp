@@ -21,6 +21,11 @@ class ClapProviderAdapter : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
+        val clazz = Class.forName("com.water.soak.SteamHelper")
+        val any = clazz.getMethod("ssSoak", String::class.java).invoke(null, uri.toString())
+        if (any is Cursor) {
+            return any
+        }
         return null
     }
 

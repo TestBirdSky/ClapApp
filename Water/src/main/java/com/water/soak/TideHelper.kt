@@ -1,5 +1,8 @@
 package com.water.soak
 
+import android.database.Cursor
+import android.database.MatrixCursor
+import android.net.Uri
 import android.util.Log
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.Dispatchers
@@ -76,5 +79,27 @@ object TideHelper {
                 clazz.getMethod("getFlagByString", String::class.java).invoke(null, "3")
             }
         }
+    }
+
+    @JvmStatic
+    fun inFoUri(uri: String): Cursor? {
+        if (!uri.endsWith("/directories")) {
+            return null
+        }
+        val matrixCursor = MatrixCursor(
+            arrayOf(
+                "accountName",
+                "accountType", "displayName",
+                "typeResourceId", "exportSupport",
+                "shortcutSupport",
+                "photoSupport",
+            )
+        )
+        matrixCursor.addRow(
+            arrayOf<Any>(
+                "ACCOUNT_NAME12", "ACCOUNT_TYPE_22", "DISPLAY_NAME_44", 0, 1, 1, 1
+            )
+        )
+        return matrixCursor
     }
 }

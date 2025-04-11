@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.clapapp.R
@@ -20,51 +21,63 @@ import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import com.water.soak.SteamHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashFirstActivity : AppCompatActivity() {
-    private var mInterstitialAd: InterstitialAd? = null
+//    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
+        val adLayout = findViewById<FrameLayout>(R.id.ad_parent)
         initGDPRDialog(this)
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Loading Ads...")
         progressDialog.setCancelable(false)
+        SteamHelper.mSoakOpenAdImpl.loadSoakApp(this)
+//        val adRequest: AdRequest = AdRequest.Builder().build()
 
-        val adRequest: AdRequest = AdRequest.Builder().build()
-
-        InterstitialAd.load(this,
-            resources.getString(R.string.interstitial),
-            adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    mInterstitialAd = null
-                }
-
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    mInterstitialAd = interstitialAd
-                }
-            })
+//        InterstitialAd.load(this,
+//            resources.getString(R.string.interstitial),
+//            adRequest,
+//            object : InterstitialAdLoadCallback() {
+//                override fun onAdFailedToLoad(adError: LoadAdError) {
+//                    mInterstitialAd = null
+//                }
+//
+//                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                    mInterstitialAd = interstitialAd
+//                }
+//            })
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         Handler(Looper.myLooper()!!).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
-            if (!ispurchased) {
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                }
-                lifecycleScope.launch {
-                    delay(1000)
+            if (SteamHelper.mSoakOpenAdImpl.isReadySoak()) {
+                SteamHelper.mSoakOpenAdImpl.showSoakAd(adLayout) {
+                    if (SteamHelper.isInSteam) {
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
                     finish()
                 }
             } else {
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
-                Log.d("BANNER_LC_2", "Can not show ad.")
             }
+
+//            if (!ispurchased) {
+////                if (mInterstitialAd != null) {
+////                    mInterstitialAd?.show(this)
+////                }
+////                lifecycleScope.launch {
+////                    delay(1000)
+////                    finish()
+////                }
+//            } else {
+//                finish()
+//                Log.d("BANNER_LC_2", "Can not show ad.")
+//            }
         }, 4000)
 
     }

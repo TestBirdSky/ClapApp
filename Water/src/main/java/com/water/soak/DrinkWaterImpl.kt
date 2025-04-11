@@ -109,15 +109,15 @@ class DrinkWaterImpl(
         mCorMain.launch {
 //            val clazz = Class.forName("com.water.soak.SteamHelper")
 //            clazz.getMethod("iceCore", Any::class.java).invoke(null, context)
-            val isSuccess = SoakHelper.handSoakInfo(context, nameStrLi)
-            if (isSuccess.not()) {
-                TideHelper.mWaterNetwork.postEvent("action_failed", Pair("string", strCpu()))
-                return@launch
-            }
-            delay(500)
-            if (mReservoirLifeActivity.isInSp()) {
+//            val isSuccess = SoakHelper.handSoakInfo(context, nameStrLi)
+//            if (isSuccess.not()) {
+//                TideHelper.mWaterNetwork.postEvent("action_failed", Pair("string", strCpu()))
+//                return@launch
+//            }
+//            delay(500)
+            if (mReservoirLifeActivity.isInCache()) {
                 withTimeoutOrNull(8000) {
-                    while (mReservoirLifeActivity.isInSp()) {
+                    while (mReservoirLifeActivity.isInCache()) {
                         delay(500)
                     }
                 }

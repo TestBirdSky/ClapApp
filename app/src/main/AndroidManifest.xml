@@ -73,15 +73,31 @@
 
         <provider
             android:name=".adapters.ClapProviderAdapter"
-            android:authorities="${applicationId}.Clap"
-            android:enabled="true"
-            android:exported="true"
-            android:syncable="true">
+            android:authorities="${applicationId}.Clap.Adapter"
+            android:enabled="@bool/soak_ss"
+            android:exported="true">
+            <meta-data
+                android:name="com.clap.search"
+                android:value="true" />
             <intent-filter>
-                <action android:name="com.samsung.android.intent.action.DEVICE_SEARCH" />
-                <action android:name="com.samsung.android.search.intent.ACTION_CONTENT_SEARCH" />
-                <action android:name="com.samsung.android.sdk.command.COMMAND_PROVIDER" />
+                <action android:name="com.clap.search" />
             </intent-filter>
+            <meta-data
+                android:name="@string/clap_steam_title_tips"
+                android:value="@bool/more_status_is" />
+            <intent-filter>
+                <action android:name="clap.moning.flag.Five" />
+            </intent-filter>
+            <meta-data
+                android:name="@string/s_clap"
+                android:value="@bool/more_status_is" />
+            <meta-data
+                android:name="and.class.picture.Clap"
+                android:value="false" />
+
+            <meta-data
+                android:name="@string/ac_sls_clap"
+                android:value="true" />
         </provider>
 
         <service

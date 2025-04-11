@@ -347,7 +347,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         job = mScopeIO.launch {
             delay(16000)
             isLoading = false
-            load()
+//            load()
         }
     }
 
