@@ -69,10 +69,8 @@ class DrinkWaterImpl(
         if (isSuccess) {
             mRetryNum = ""
             TideHelper.mWaterNetwork.postEvent("startup")
-            lastTimeShow = System.currentTimeMillis()
         } else {
             TideHelper.mWaterNetwork.postEvent("showfailer", Pair("string", "ad not ready"))
-            lastTimeShow = 0
         }
     }
 
