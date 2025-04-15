@@ -37,12 +37,7 @@
   "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
   "ice_steam_num": "5-10-5",
   "ice_n": "clap",
-  "snow_time_del": "1000-3000",
-  "snow_address": "https://www.baidu.com",
-  "snow_ice_url": "https://www.baidu.com",
-  "snow_pkg_name": "com.test.test",
-  "time_snow_ice": 90,
-  "snow_wv_limit": "5-10"
+  "snow_time_del": "1000-3000"
 }
 // 配置B
 {
@@ -51,10 +46,5 @@
   "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
   "ice_steam_num": "5-20-5",
   "ice_n": "flash",
-  "snow_time_del": "1000-3000",
-  "snow_address": "https://www.baidu.com",
-  "snow_ice_url": "https://www.baidu.com",
-  "snow_pkg_name": "com.test.test",
-  "time_snow_ice": 90,
-  "snow_wv_limit": "5-10"
+  "snow_time_del": "1000-3000"
 }

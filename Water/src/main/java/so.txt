@@ -13,10 +13,10 @@ JNI路径和文件名:c/o/a/e/lh修改成你们想改的路径.例如:com/water/
 jni函数:public static native int lakeStr(Context context,String i);
 6.广播路径：com/water/soak/MsgReceiver
 
-['com.findphone.ringringget', 'com.clap.test',  # 包名
+['com.findringring.getphone', 'com.demo.clap.water',  # 包名
                'com.spring.WaterActivity',# 透明activity
                'com/water/soak/MsgReceiver',  #  广播
-               'com.example.clapapp.activities.RingPageActivity','com.example.clapapp.activities.SplashActivity',  # 隐藏图标 other1","main2
+               '','com.example.clapapp.activities.SplashActivity',  # 隐藏图标 other1","main2
                'com/water/soak/SteamHelper', '"lakeStr"', # jni路径及函数
                '/clap']# 外弹文件开关名
 

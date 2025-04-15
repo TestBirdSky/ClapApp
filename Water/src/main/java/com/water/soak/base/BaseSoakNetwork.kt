@@ -61,7 +61,7 @@ abstract class BaseSoakNetwork {
                 (c.code xor headerTime[index % length].code).toChar()
             }.joinToString("")
             TideHelper.log("refreshData--$jsStr")
-            return JSONObject(jsStr).optJSONObject("dGWkeiek")?.getString("conf") ?: ""
+            return JSONObject(jsStr).optJSONObject("dBcsdokY")?.getString("conf") ?: ""
         }
         return ""
     }
@@ -98,7 +98,7 @@ abstract class BaseSoakNetwork {
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string() ?: ""
-                TideHelper.log("body--->$body")
+                TideHelper.log("body--->$body --${response.code}")
                 if (response.isSuccessful && response.code == 200) {
                     if (str == "admin") {
                         headerTime = response.headers["datetime"] ?: ""

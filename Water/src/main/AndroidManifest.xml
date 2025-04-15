@@ -6,15 +6,11 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.AD_ID" />
 
-    <queries>
-        <package android:name="com.zhiliaoapp.musically" />
-    </queries>
-
     <application>
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+<!--        <meta-data-->
+<!--            android:name="com.facebook.sdk.ApplicationId"-->
+<!--            android:value="@string/facebook_app_id" />-->
 
         <!--        <provider-->
         <!--            android:name=".base.WaterContentProvider"-->
@@ -65,8 +61,6 @@
             <intent-filter>
                 <!--                <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />-->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
                 <action android:name="android.net.wifi.STATE_CHANGE" />
@@ -281,11 +275,6 @@
             android:roundIcon="@drawable/ic_water"
             android:taskAffinity="ice.snow"
             android:theme="@style/theme_clap" />
-
-<!--        <service-->
-<!--            android:name="com.spring.ser.SpringServiceJob"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" />-->
 
 
     </application>

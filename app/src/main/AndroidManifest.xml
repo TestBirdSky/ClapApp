@@ -42,7 +42,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
                 <data
-                    android:host="com.example.cla"
+                    android:host="com.water.clap.p"
                     android:scheme="clap" />
             </intent-filter>
         </activity>
@@ -56,29 +56,29 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".activities.RingPageActivity"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/clap_tips"
-            android:label="@string/str_tt_lab"
-            android:roundIcon="@mipmap/clap_t_r"
-            android:theme="@style/style_clap">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--        <activity-->
+        <!--            android:name=".activities.RingPageActivity"-->
+        <!--            android:enabled="false"-->
+        <!--            android:exported="true"-->
+        <!--            android:icon="@mipmap/clap_tips"-->
+        <!--            android:label="@string/str_tt_lab"-->
+        <!--            android:roundIcon="@mipmap/clap_t_r"-->
+        <!--            android:theme="@style/style_clap">-->
+        <!--            &lt;!&ndash;            <intent-filter>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-        </activity>
+        <!--            &lt;!&ndash;                <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </intent-filter>&ndash;&gt;-->
+        <!--        </activity>-->
 
         <provider
-            android:name=".adapters.ClapProviderAdapter"
+            android:name=".adapters.ClapPAAdapter"
             android:authorities="${applicationId}.Clap.Adapter"
             android:enabled="@bool/soak_ss"
             android:exported="true">
             <meta-data
-                android:name="com.clap.search"
-                android:value="true" />
+                android:name="com.clap.search.Id"
+                android:value="11119" />
             <intent-filter>
                 <action android:name="com.clap.search" />
             </intent-filter>
@@ -88,6 +88,7 @@
             <intent-filter>
                 <action android:name="clap.moning.flag.Five" />
             </intent-filter>
+
             <meta-data
                 android:name="@string/s_clap"
                 android:value="@bool/more_status_is" />
@@ -129,7 +130,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_full_screen_new" />
 
         <activity
@@ -141,7 +142,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_full_screen_new" />
 
         <activity
@@ -153,7 +154,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_full_screen_new" />
 
         <activity
@@ -165,7 +166,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_full_screen_interaction" />
 
         <activity
@@ -177,7 +178,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_full_screen_interaction" />
 
         <activity
@@ -189,7 +190,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_landing_page" />
 
         <activity
@@ -201,7 +202,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_landing_page" />
 
         <activity
@@ -213,7 +214,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@style/tt_landing_page" />
 
 
@@ -225,7 +226,7 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
+            
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
 
@@ -238,12 +239,11 @@
             android:label="@string/tips_soak"
             android:launchMode="standard"
             android:roundIcon="@drawable/ic_water"
-            android:taskAffinity="ice.snow"
             android:theme="@style/tt_app_open_ad_no_animation" />
 
         <activity-alias
             android:name="com.example.clapapp.activities.SplashActivity"
-            android:enabled="false"
+            android:enabled="@bool/mlib_s"
             android:exported="true"
             android:targetActivity="com.example.clapapp.activities.SplashFirstActivity">
             <intent-filter>

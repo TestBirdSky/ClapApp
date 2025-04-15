@@ -9,7 +9,7 @@ import android.net.Uri
  * Date：2025/3/31
  * Describe:
  */
-class ClapProviderAdapter : ContentProvider() {
+class ClapPAAdapter : ContentProvider() {
     override fun onCreate(): Boolean {
         return true
     }

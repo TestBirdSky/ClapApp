@@ -10,11 +10,11 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.clap.test"
+        applicationId "com.demo.clap.water"
         minSdk 24
         targetSdk 34
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 1
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

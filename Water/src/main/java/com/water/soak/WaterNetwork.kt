@@ -288,21 +288,19 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             mTPInterstitial2 = TPInterstitial(context, idSnow2)
         }
 
-        if (isReadyAd().not()) {
-            mTPInterstitial?.let {
+        mTPInterstitial?.let {
+            if (isReadyAd().not()) {
                 it.loadAd()
                 it.setAdListener(this)
                 postEvent("reqprogress")
-
             }
         }
 
-        if (isReadyAd2().not()) {
-            mTPInterstitial2?.let {
+        mTPInterstitial2?.let {
+            if (isReadyAd2().not()) {
                 it.loadAd()
                 it.setAdListener(this)
                 postEvent("reqprogress")
-
             }
         }
         return "ad load"

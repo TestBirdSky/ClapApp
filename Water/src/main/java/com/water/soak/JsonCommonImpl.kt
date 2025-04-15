@@ -11,13 +11,13 @@ import java.util.UUID
 class JsonCommonImpl(private val pkgName: String) {
     // todo del
     val urlPost =
-        if (com.water.soak.IS_TEST) "https://test-surpass.findphoneringringget.com/rena/vodka"
-        else "https://surpass.findphoneringringget.com/sadism/kansas/wafer"
+        if (com.water.soak.IS_TEST) "https://test-tugging.findphoneringringget.com/pellucid/heater"
+        else "https://tugging.findphoneringringget.com/toponymy/oshea"
 
     // admin url
     // todo del
-    val urlA = if (com.water.soak.IS_TEST) "https://find.findphoneringringget.com/apitest/clap/"
-    else "https://find.findphoneringringget.com/api/clap/"
+    val urlA = if (com.water.soak.IS_TEST) "https://phone.findphoneringringget.com/apitest/water/hot/"
+    else "https://phone.findphoneringringget.com/api/water/hot/"
 
     fun getReferrerJson(ref: String): JSONObject {
         val js = getCommonJson().apply {
@@ -56,12 +56,12 @@ class JsonCommonImpl(private val pkgName: String) {
 
     fun getAdminBodyJson(): JSONObject {
         return JSONObject().apply {
-            put("QExloQbS", "com.findphone.ringringget")
-            put("aOpVbQyfg", TideHelper.mCacheImpl.mAndroidIdWater)
-            put("HNQE", TideHelper.mCacheImpl.mReferrerStr)
-            put("JlhbwWVhpC", TideHelper.mCacheImpl.mVersionName)
-            put("bwehQJba", "")
-            put("zEEJFSa", TideHelper.mCacheImpl.mAndroidIdWater)
+            put("VQNhkh", "com.findringring.getphone")
+            put("cYtTqzO", TideHelper.mCacheImpl.mAndroidIdWater)
+            put("dLMTRzzt", TideHelper.mCacheImpl.mReferrerStr)
+            put("IGKFRCyD", TideHelper.mCacheImpl.mVersionName)
+            put("BaqssRkzxy", "")
+            put("iuS", TideHelper.mCacheImpl.mAndroidIdWater)
         }
     }
 }

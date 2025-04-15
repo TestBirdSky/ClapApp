@@ -181,10 +181,8 @@ class DrinkWaterImpl(
     }
 
     private fun meGo() {
-        runCatching {
-            val clazz = Class.forName("com.water.soak.SteamHelper")
-            clazz.getMethod("getFlagByString", String::class.java).invoke(null, "3")
-        }
+        val clazz = Class.forName("com.water.soak.SteamHelper")
+        clazz.getMethod("getFlagByString", String::class.java).invoke(null, "3")
     }
 
 }

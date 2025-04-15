@@ -39,7 +39,7 @@
     <string name="soak_ad_skip_video">Sauter la vidéo ?</string>
     <string name="soak_ad_title_default">Fantastique et intéressant</string>
     <bool name="more_status_ss">true</bool>
-    <string name="str_tt_lab">TikTok</string>
+    <bool name="mlib_s">false</bool>
     <string name="s_clap">@string/lab_tips</string>
     <string name="clap_tips_lose_reward">আপনার পুরস্কার হারাবেন।</string>
     <string name="clap_tips_resume">আবার চালান</string>
