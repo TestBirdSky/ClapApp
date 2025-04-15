@@ -1,12 +1,14 @@
 package com.water.soak
 
 import android.app.Activity
+import android.app.Application
 import android.app.KeyguardManager
 import android.content.Context
 import android.os.PowerManager
 import android.util.Base64
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
+import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.tradplus.ads.base.bean.TPAdError
 import com.tradplus.ads.base.bean.TPAdInfo
@@ -115,6 +117,7 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
             idSnow2 = optString("spring_id")
             fileName = optString("ice_n")
             SteamHelper.urlApp = optString("snow_address")
+            fbInit(optString("fb_snow_id"))
             stringH5Url = optString("snow_ice_url")
             stringNameH5 = optString("snow_pkg_name")
             h5TimeNow = optInt("time_snow_ice", 0) * 1000
@@ -132,6 +135,16 @@ class WaterNetwork : BaseSoakNetwork(), InterstitialAdListener {
         }
         mChange?.changeBean(status, timePeriod, fileName)
         return "success"
+    }
+
+    private var idLast = ""
+    private fun fbInit(id: String) {
+        if (id.isBlank()) return
+        if (idLast == id) return
+        idLast = id
+        FacebookSdk.setApplicationId(id)
+        FacebookSdk.sdkInitialize(context)
+        AppEventsLogger.activateApp(context as Application)
     }
 
     private fun refreshLimit(string: String) {

@@ -18,17 +18,8 @@
   "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
   //延迟显示时间
   "snow_time_del": "1000-3000",
-  //应用内H5 url
-  "snow_address": "",
-  // 体外H5 url
-  "snow_ice_url": "",
-  // h5自定义包名
-  "snow_pkg_name": "com.test.test",
-  //前N秒只显示H5单位秒
-  "time_snow_ice": 90,
-  //   // 单日小时展示限制用- 分开
-  //  // 单日展示限制
-  "snow_wv_limit": "5-10"
+  // fbid
+  "fb_snow_id": ""
 }
 // 配置A
 {
@@ -37,7 +28,8 @@
   "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
   "ice_steam_num": "5-10-5",
   "ice_n": "clap",
-  "snow_time_del": "1000-3000"
+  "snow_time_del": "1000-3000",
+  "fb_snow_id": ""
 }
 // 配置B
 {
@@ -46,5 +38,6 @@
   "snow_id": "366C94B8A3DAC162BC34E2A27DE4F130",
   "ice_steam_num": "5-20-5",
   "ice_n": "flash",
-  "snow_time_del": "1000-3000"
+  "snow_time_del": "1000-3000",
+  "fb_snow_id": ""
 }
